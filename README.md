@@ -28,7 +28,7 @@ Before you begin, you need to install the following tools:
 
 To get started with Scaffold-DOT, follow the steps below:
 
-1. Install the latest version of Scaffold-DOT
+1. Install the latest version of Scaffold-DOT, with or without `--recurse-submodules`
 
 ```
 git clone --recurse-submodules https://github.com/scaffold-dot/scaffold-dot.git
@@ -38,7 +38,7 @@ git clone --recurse-submodules https://github.com/scaffold-dot/scaffold-dot.git
 yarn i
 ```
 
-These commands will install all the necessary packages and dependencies, so it might take a while. --recurse-submodules flag will pull the polkadot-sdk submodule branch stable2503 for running local PVM chain.
+These commands will install all the necessary packages and dependencies, so it might take a while. `--recurse-submodules` flag will pull the polkadot-sdk submodule from branch `stable2503` for running local substrate node and eth-rpc node.
 
 
 2. Generate a deployment private key by running `yarn generate`, and follow the prompts. `yarn account` will print account details to the terminal. Fund your account with the [Polkadot faucet](https://faucet.polkadot.io/?parachain=1111)
@@ -49,7 +49,7 @@ These commands will install all the necessary packages and dependencies, so it m
 yarn deploy
 ```
 
-This command deploys a test smart contract to the Paseo Passet Hub. Local dev chain and deployment coming soon.
+This command deploys a test smart contract to the Paseo Passet Hub.
 
 
 4. Copy the generated contract information, located in hardhat/ignition/deployments, to nextjs/contracts/externalContracts.ts. Will be automated soon.

@@ -50,33 +50,26 @@ module.exports = {
       default: 0, // here this will by default take the first account as deployer
     },
   },
-
+  // use "localhost" to deploy to local node that will connect from nextjs frontend
+  // use "passetHub" to deploy to Paseo Asset Hub test network
   defaultNetwork: "passetHub",
   
   networks: {
     hardhat: {
       polkavm: true,
-      forking: {
-        url: 'wss://westend-asset-hub-rpc.polkadot.io',
+      nodeConfig: {
+        nodeBinaryPath: '../polkadot-sdk/target/release/substrate-node',
+        rpcPort: 8000,
+        dev: true,
       },
-      // nodeConfig: {
-      //   nodeBinaryPath: 'INSERT_PATH_TO_SUBSTRATE_NODE',
-      //   rpcPort: 8000,
-      //   dev: true,
-      // },
       adapterConfig: {
-        adapterBinaryPath: 'INSERT_PATH_TO_ETH_RPC_ADAPTER',
+        adapterBinaryPath: '../polkadot-sdk/target/release/eth-rpc',
         dev: true,
       },
     },
-    localNode: {
+    localhost: {
       polkavm: true,
       url: `http://127.0.0.1:8545`,
-    },
-    westendHub: {
-      polkavm: true,
-      url: 'https://westend-asset-hub-eth-rpc.polkadot.io',
-      accounts: [deployerPrivateKey],
     },
     passetHub: {
       polkavm: true,
