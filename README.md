@@ -38,23 +38,37 @@ git clone --recurse-submodules https://github.com/scaffold-dot/scaffold-dot.git
 yarn i
 ```
 
+```
+yarn build
+```
+
 These commands will install all the necessary packages and dependencies, so it might take a while. `--recurse-submodules` flag will pull the polkadot-sdk submodule from branch `stable2503` for running local substrate node and eth-rpc node.
 
 
 2. Generate a deployment private key by running `yarn generate`, and follow the prompts. `yarn account` will print account details to the terminal. Fund your account with the [Polkadot faucet](https://faucet.polkadot.io/?parachain=1111)
 
-3. On a terminal, deploy the test contract:
+3. On a terminal, start the substrate node:
+
+```
+yarn node
+```
+
+4. On a second terminal, start the eth-rpc server:
+
+```
+yarn rpc
+```
+
+On a third terminal, deploy the test contract:
 
 ```
 yarn deploy
 ```
 
-This command deploys a test smart contract to the Paseo Passet Hub.
+This command deploys a test smart contract to the local chain.
 
 
-4. Copy the generated contract information, located in hardhat/ignition/deployments, to nextjs/contracts/externalContracts.ts. Will be automated soon.
-
-5. On a second terminal, start your NextJS app:
+5. On a fourth terminal, start your NextJS app:
 
 ```
 yarn start
