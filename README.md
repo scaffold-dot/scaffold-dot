@@ -28,22 +28,26 @@ Before you begin, you need to install the following tools:
 
 To get started with Scaffold-DOT, follow the steps below:
 
-1. Install the latest version of Scaffold-DOT, with or without `--recurse-submodules`
+1. Install the latest version of Scaffold-DOT, with Polkadot-SDK submodule.
 
 ```
-git clone --recurse-submodules https://github.com/scaffold-dot/scaffold-dot.git
+git clone --recurse-submodules https://github.com/scaffold-dot/scaffold-dot.git scaffold-dot
+```
+cd into scaffold-dot directory and add pacakge.json to polkadot-sdk to allow yarn workspace scripts from project root
+
+```
+cd scaffold-dot && mv move.package.json ./packages/polkadot-sdk/package.json
 ```
 
 ```
 yarn i
 ```
 
+2. Build the polkadot node and eth-rpc
+
 ```
 yarn build
 ```
-
-These commands will install all the necessary packages and dependencies, so it might take a while. `--recurse-submodules` flag will pull the polkadot-sdk submodule from branch `stable2503` for running local substrate node and eth-rpc node.
-
 
 2. Generate a deployment private key by running `yarn generate`, and follow the prompts. `yarn account` will print account details to the terminal. Fund your account with the [Polkadot faucet](https://faucet.polkadot.io/?parachain=1111)
 
