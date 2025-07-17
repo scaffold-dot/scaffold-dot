@@ -59,7 +59,7 @@ yarn node
 yarn rpc
 ```
 
-On a third terminal, deploy the test contract:
+5. On a third terminal, deploy the test contract:
 
 ```
 yarn deploy
@@ -68,7 +68,7 @@ yarn deploy
 This command deploys a test smart contract to the local chain.
 
 
-5. On a fourth terminal, start your NextJS app:
+6. On a fourth terminal, start your NextJS app:
 
 ```
 yarn start
