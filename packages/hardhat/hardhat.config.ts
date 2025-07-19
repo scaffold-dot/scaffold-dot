@@ -52,7 +52,7 @@ module.exports = {
   },
   // use "localhost" to deploy to local node that will connect from nextjs frontend
   // use "passetHub" to deploy to Paseo Asset Hub test network
-  defaultNetwork: "passetHub",
+  defaultNetwork: "localhost",
   
   networks: {
     hardhat: {
@@ -74,6 +74,11 @@ module.exports = {
     passetHub: {
       polkavm: true,
       url: 'https://testnet-passet-hub-eth-rpc.polkadot.io',
+      accounts: [deployerPrivateKey],
+    },
+    kusamaHub: {
+      polkavm: true,
+      url: 'https://kusama-asset-hub-eth-rpc.polkadot.io',
       accounts: [deployerPrivateKey],
     },
   },
