@@ -54,7 +54,7 @@ yarn build
 3. On a terminal, start the substrate node:
 
 ```
-yarn node
+yarn chain
 ```
 
 4. On a second terminal, start the eth-rpc server:
