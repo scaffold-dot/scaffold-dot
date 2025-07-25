@@ -23,5 +23,6 @@ node_modules
 # cli
 dist
 
+# hardhat-polkadot
 /packages/hardhat/artifacts-pvm/*
 /packages/hardhat/cache-pvm/*

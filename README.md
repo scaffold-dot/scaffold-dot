@@ -21,37 +21,58 @@ Before you begin, you need to install the following tools:
 - Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
 - [Git](https://git-scm.com/downloads)
 
+- [Rust](https://www.rust-lang.org/)
+- [Polkadot-SDK](https://docs.polkadot.com/develop/parachains/install-polkadot-sdk/)
+
 ## Quickstart
 
 To get started with Scaffold-DOT, follow the steps below:
 
-1. Install the latest version of Scaffold-DOT
+1. Install the latest version of Scaffold-DOT, with Polkadot-SDK submodule.
 
 ```
-git clone https://github.com/scaffold-dot/scaffold-dot.git
+git clone --recurse-submodules https://github.com/scaffold-dot/scaffold-dot.git scaffold-dot
+```
+cd into scaffold-dot directory and add pacakge.json to polkadot-sdk to allow yarn workspace scripts from project root
+
+```
+cd scaffold-dot && mv move.package.json ./packages/polkadot-sdk/package.json
 ```
 
 ```
 yarn i
 ```
 
-These commands will install all the necessary packages and dependencies, so it might take a while.
+2. Build the polkadot node and eth-rpc
 
+```
+yarn build
+```
 
-2. Create a .env in packages/hardhat and add 'PRIVATE_KEY="<YOUR_PRIVATE_KEY>"'. It's highly recommended to use a new wallet address with no real tokens, make sure you [get some WND tokens](faucet.polkadot.io/westend?parachain=1000)
+2. Generate a deployment private key by running `yarn generate`, and follow the prompts. `yarn account` will print account details to the terminal. Fund your account with the [Polkadot faucet](https://faucet.polkadot.io/?parachain=1111)
 
-3. On a terminal, deploy the test contract:
+3. On a terminal, start the substrate node:
+
+```
+yarn chain
+```
+
+4. On a second terminal, start the eth-rpc server:
+
+```
+yarn rpc
+```
+
+5. On a third terminal, deploy the test contract:
 
 ```
 yarn deploy
 ```
 
-This command deploys a test smart contract to the Westend Hub, awaiting containerized resolc binary from paritytech to run local development.
+This command deploys a test smart contract to the local chain.
 
 
-4. Copy the generated contract information, located in hardhat/ignition/deployments, to nextjs/contracts/externalContracts.ts. Will be automated soon.
-
-5. On a second terminal, start your NextJS app:
+6. On a fourth terminal, start your NextJS app:
 
 ```
 yarn start
@@ -82,4 +103,4 @@ To know more about its features, check out their [website](https://scaffoldeth.i
 
 We welcome contributions to Scaffold-DOT!
 
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-dot/scaffold-dot/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+Please see [CONTRIBUTING.MD](https://github.com/scaffold-dot/scaffold-dot/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-DOT.

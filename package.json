@@ -5,7 +5,8 @@
   "workspaces": {
     "packages": [
       "packages/hardhat",
-      "packages/nextjs"
+      "packages/nextjs",
+      "packages/polkadot-sdk"
     ]
   },
   "scripts": {
@@ -13,7 +14,8 @@
     "account:import": "yarn workspace @se-2/hardhat account:import",
     "account:generate": "yarn workspace @se-2/hardhat account:generate",
     "account:reveal-pk": "yarn workspace @se-2/hardhat account:reveal-pk",
-    "chain": "yarn hardhat:chain",
+    "build": "yarn polkadot:build",
+    "chain": "yarn polkadot:chain",
     "compile": "yarn hardhat:compile",
     "deploy": "yarn hardhat:deploy",
     "fork": "yarn hardhat:fork",
@@ -40,8 +42,13 @@
     "next:format": "yarn workspace @se-2/nextjs format",
     "next:lint": "yarn workspace @se-2/nextjs lint",
     "next:serve": "yarn workspace @se-2/nextjs serve",
+    "node": "yarn polkadot:node",
+    "polkadot:chain": "yarn workspace @se-2/polkadot-sdk chain",
+    "polkadot:build": "yarn workspace @se-2/polkadot-sdk build",
+    "polkadot:rpc": "yarn workspace @se-2/polkadot-sdk rpc",
     "postinstall": "husky",
     "precommit": "lint-staged",
+    "rpc": "yarn polkadot:rpc",
     "start": "yarn workspace @se-2/nextjs dev",
     "test": "yarn hardhat:test",
     "vercel": "yarn workspace @se-2/nextjs vercel",

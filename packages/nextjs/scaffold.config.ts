@@ -1,7 +1,7 @@
 import * as chains from "viem/chains";
 import { defineChain } from "viem";
 
-// Define Westend Asset Hub chain
+// Define Paseo Passet Hub chain, not included in viem/chains
 export const passetHub = defineChain({
   id: 420420422,
   name: "Paseo Asset Hub",
@@ -20,6 +20,28 @@ export const passetHub = defineChain({
     },
   },
   testnet: true,
+});
+
+
+// Define Kusama Hub chain, not included in viem/chains
+export const kusamaHub = defineChain({
+  id: 420420418,
+  name: "Kusama Hub",
+  nativeCurrency: {
+    decimals: 12,
+    name: "Kusama",
+    symbol: "KSM",
+  },
+  rpcUrls: {
+    default: { http: ["https://kusama-asset-hub-eth-rpc.polkadot.io"] },
+  },
+  blockExplorers: {
+    default: {
+      name: "Blockscout",
+      url: "https://blockscout-kusama-asset-hub.parity-chains-scw.parity.io/",
+    },
+  },
+  testnet: false,
 });
 
 export type ScaffoldConfig = {
