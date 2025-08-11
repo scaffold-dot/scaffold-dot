@@ -6,6 +6,7 @@ require('hardhat-deploy');
 import "hardhat-deploy-ethers";
 import { task } from 'hardhat/config';
 import generateTsAbis from './scripts/generateTsAbis';
+import devChainSpec from '../polkadot-sdk/templates/minimal/dev_chain_spec.json';
 
 // You can generate a random account with `yarn generate` or `yarn account:import` to import your existing PK
 // Address: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8
@@ -38,32 +39,30 @@ module.exports = {
     settings: {
       optimizer: {
         enabled: true,
-        parameters: 'z',
-        fallbackOz: true,
         runs: 200,
       },
     },
   },
   
-  namedAccounts: {
-    deployer: {
-      default: 0, // here this will by default take the first account as deployer
-    },
-  },
   // use "localhost" to deploy to local node that will connect from nextjs frontend
   // use "passetHub" to deploy to Paseo Asset Hub test network
   defaultNetwork: "localhost",
-  
+  namedAccounts: {
+    deployer: {
+      default: 0, // here this will by default take the first account as deployer
+      420420420: 0,
+    },
+  },
   networks: {
     hardhat: {
       polkavm: true,
       nodeConfig: {
-        nodeBinaryPath: '../polkadot-sdk/target/release/substrate-node',
+        nodeBinaryPath: '../polkadot-sdk/target/release/substrate-node --dev',
         rpcPort: 8000,
         dev: true,
       },
       adapterConfig: {
-        adapterBinaryPath: '../polkadot-sdk/target/release/eth-rpc',
+        adapterBinaryPath: '../polkadot-sdk/target/release/eth-rpc --dev',
         dev: true,
       },
     },
@@ -75,11 +74,13 @@ module.exports = {
       polkavm: true,
       url: 'https://testnet-passet-hub-eth-rpc.polkadot.io',
       accounts: [deployerPrivateKey],
+      chainId: 1000,
     },
     kusamaHub: {
       polkavm: true,
       url: 'https://kusama-asset-hub-eth-rpc.polkadot.io',
       accounts: [deployerPrivateKey],
+      chainId: 1001,
     },
   },
 };
