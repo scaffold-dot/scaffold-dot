@@ -1,4 +1,4 @@
 [submodule "packages/polkadot-sdk"]
 	path = packages/polkadot-sdk
 	url = https://github.com/paritytech/polkadot-sdk.git
-	branch = stable2503
+	branch = 8e2b6f742a38bb13688e12abacded0aab2dbbb23

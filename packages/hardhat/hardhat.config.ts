@@ -46,11 +46,10 @@ module.exports = {
   
   // use "localhost" to deploy to local node that will connect from nextjs frontend
   // use "passetHub" to deploy to Paseo Asset Hub test network
-  defaultNetwork: "localhost",
+  defaultNetwork: "localNode",
   namedAccounts: {
     deployer: {
       default: 0, // here this will by default take the first account as deployer
-      420420420: 0,
     },
   },
   networks: {
@@ -66,21 +65,22 @@ module.exports = {
         dev: true,
       },
     },
-    localhost: {
+    localNode: {
       polkavm: true,
       url: `http://127.0.0.1:8545`,
+      accounts: [deployerPrivateKey],
     },
     passetHub: {
       polkavm: true,
       url: 'https://testnet-passet-hub-eth-rpc.polkadot.io',
       accounts: [deployerPrivateKey],
-      chainId: 1000,
+      chainId: 420420422,
     },
     kusamaHub: {
       polkavm: true,
       url: 'https://kusama-asset-hub-eth-rpc.polkadot.io',
       accounts: [deployerPrivateKey],
-      chainId: 1001,
+      chainId: 420420418,
     },
   },
 };
