@@ -40,7 +40,7 @@ cd scaffold-dot && mv move.package.json ./packages/polkadot-sdk/package.json
 ```
 
 ```
-yarn i
+yarn
 ```
 
 2. Build the polkadot node and eth-rpc
