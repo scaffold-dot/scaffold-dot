@@ -12,7 +12,7 @@ async function main() {
   const networkIndex = process.argv.indexOf("--network");
   const networkName = networkIndex !== -1 ? process.argv[networkIndex + 1] : config.defaultNetwork;
 
-  if (networkName === "localhost" || networkName === "hardhat") {
+  if (networkName === "localNode" || networkName === "hardhat") {
     // Deploy command on the localhost network
     const hardhat = spawn("hardhat", ["deploy", ...process.argv.slice(2)], {
       stdio: "inherit",

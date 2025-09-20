@@ -34,7 +34,6 @@ module.exports = {
   solidity: '0.8.28',
   // npm Compiler
   resolc: {
-    version: '1.5.2',
     compilerSource: 'npm',
     settings: {
       optimizer: {
@@ -68,7 +67,7 @@ module.exports = {
     localNode: {
       polkavm: true,
       url: `http://127.0.0.1:8545`,
-      accounts: [deployerPrivateKey],
+      accounts: ["0x5fb92d6e98884f76de468fa3f6278f8807c48bebc13595d45af5bdc4da702133"],
     },
     passetHub: {
       polkavm: true,

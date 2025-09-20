@@ -31,39 +31,31 @@ To get started with Scaffold-DOT, follow the steps below:
 1. Install the latest version of Scaffold-DOT, with Polkadot-SDK submodule.
 
 ```
-git clone --recurse-submodules https://github.com/scaffold-dot/scaffold-dot.git scaffold-dot
+git clone https://github.com/scaffold-dot/scaffold-dot.git scaffold-dot
 ```
-cd into scaffold-dot directory and add pacakge.json to polkadot-sdk to allow yarn workspace scripts from project root
+cd into scaffold-dot directory and yarn install
 
 ```
-cd scaffold-dot && mv move.package.json ./packages/polkadot-sdk/package.json
+cd scaffold-dot && yarn install
 ```
 
-```
-yarn
-```
+This step will set up your monorepo and download the correct prebuilt asset hub binaries for your system.
 
-2. Build the polkadot node and eth-rpc
 
-```
-yarn build
-```
 
-2. Generate a deployment private key by running `yarn generate`, and follow the prompts. `yarn account` will print account details to the terminal. Fund your account with the [Polkadot faucet](https://faucet.polkadot.io/?parachain=1111)
-
-3. On a terminal, start the substrate node:
+2. On a terminal, start the substrate node:
 
 ```
 yarn chain
 ```
 
-4. On a second terminal, start the eth-rpc server:
+3. On a second terminal, start the eth-rpc server:
 
 ```
 yarn rpc
 ```
 
-5. On a third terminal, deploy the test contract:
+4. On a third terminal, deploy the test contract:
 
 ```
 yarn deploy
@@ -72,13 +64,19 @@ yarn deploy
 This command deploys a test smart contract to the local chain.
 
 
-6. On a fourth terminal, start your NextJS app:
+5. On a fourth terminal, start your NextJS app:
 
 ```
 yarn start
 ```
 
 Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+
+
+**Deployment to a public testnet or AssetHub**
+
+6. Generate a deployment private key by running `yarn generate`, and follow the prompts. `yarn account` will print account details to the terminal. Fund your account with the [Polkadot faucet](https://faucet.polkadot.io/?parachain=1111) or send the deployment account somd funds from AssetHub.
+
 
 **What's next**:
 

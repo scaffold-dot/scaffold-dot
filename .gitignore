@@ -26,3 +26,6 @@ dist
 # hardhat-polkadot
 /packages/hardhat/artifacts-pvm/*
 /packages/hardhat/cache-pvm/*
+
+# asset hub binaries
+packages/asset-hub-pvm/bin/

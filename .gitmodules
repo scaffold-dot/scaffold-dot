@@ -1,4 +1,4 @@
-[submodule "packages/polkadot-sdk"]
-	path = packages/polkadot-sdk
-	url = https://github.com/paritytech/polkadot-sdk.git
-	branch = 8e2b6f742a38bb13688e12abacded0aab2dbbb23
+[submodule "packages/pvm-container"]
+	path = packages/pvm-container
+	url = https://github.com/paritytech/smart-contracts-devcontainer.git
+	branch = main

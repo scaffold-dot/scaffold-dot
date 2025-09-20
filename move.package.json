@@ -1,9 +1,0 @@
-{
-  "name": "@se-2/polkadot-sdk",
-  "packageManager": "yarn@3.2.3",
-  "scripts": {
-    "build": "cargo build -p revive-dev-node --bin revive-dev-node --release && cargo build -p pallet-revive-eth-rpc --bin eth-rpc --release",
-    "chain": "./target/release/revive-dev-node --dev",
-    "rpc": "./target/release/eth-rpc --dev"
-  }
-}
