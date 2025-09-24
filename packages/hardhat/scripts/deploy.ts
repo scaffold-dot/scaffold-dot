@@ -1,14 +1,30 @@
 import hre from "hardhat";
-import MyToken from "../ignition/modules/MyToken.js";
+import YourContract from "../ignition/modules/YourContract.ts";
 import generateTsAbis from "./generateTsAbis.ts";
 
-async function main () {
-  const { mytoken } = await hre.ignition.deploy(MyToken);
-
-  console.log(`MyToken deployed to: ${await mytoken.getAddress()}`);
+// Export the main deployment functionality
+export async function deployYourContract() {
+  const { yourContract } = await hre.ignition.deploy(YourContract);
+  const contractAddress = await yourContract.getAddress();
+  
+  console.log(`YourContract deployed to: ${contractAddress}`);
   console.log('Writing abi to nextjs directory...');
-  await generateTsAbis(hre, myToken);
+  
+  await generateTsAbis(hre, yourContract);
   console.log('Done!');
+  
+  return {
+    contract: yourContract,
+    address: contractAddress
+  };
 }
 
-main().catch(console.error);
+// Keep the original script functionality for direct execution
+async function main() {
+  await deployYourContract();
+}
+
+// Only run main() if this file is executed directly
+if (require.main === module) {
+  main().catch(console.error);
+}

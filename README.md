@@ -39,8 +39,7 @@ cd into scaffold-dot directory and yarn install
 cd scaffold-dot && yarn install
 ```
 
-This step will set up your monorepo and download the correct prebuilt asset hub binaries for your system.
-
+This step will set up your monorepo and download the correct prebuilt asset hub binaries for your system. Windows OS not supported.
 
 
 2. On a terminal, start the substrate node:
@@ -76,6 +75,8 @@ Visit your app on: `http://localhost:3000`. You can interact with your smart con
 **Deployment to a public testnet or AssetHub**
 
 6. Generate a deployment private key by running `yarn generate`, and follow the prompts. `yarn account` will print account details to the terminal. Fund your account with the [Polkadot faucet](https://faucet.polkadot.io/?parachain=1111) or send the deployment account somd funds from AssetHub.
+
+Scaffold-DOT will generate an encrypted private key. This is the most secure way to generate and store your private key.
 
 
 **What's next**:

@@ -4,6 +4,7 @@ import { Wallet } from "ethers";
 import password from "@inquirer/password";
 import { spawn } from "child_process";
 import { config } from "hardhat";
+import { deployYourContract } from "./deploy.ts";
 
 /**
  * Unencrypts the private key and runs the hardhat deploy command
@@ -14,15 +15,7 @@ async function main() {
 
   if (networkName === "localNode" || networkName === "hardhat") {
     // Deploy command on the localhost network
-    const hardhat = spawn("hardhat", ["deploy", ...process.argv.slice(2)], {
-      stdio: "inherit",
-      env: process.env,
-      shell: process.platform === "win32",
-    });
-
-    hardhat.on("exit", code => {
-      process.exit(code || 0);
-    });
+    await deployYourContract();
     return;
   }
 
@@ -37,17 +30,11 @@ async function main() {
 
   try {
     const wallet = await Wallet.fromEncryptedJson(encryptedKey, pass);
-    process.env.__RUNTIME_DEPLOYER_PRIVATE_KEY = wallet.privateKey;
-
-    const hardhat = spawn("hardhat", ["deploy", ...process.argv.slice(2)], {
-      stdio: "inherit",
-      env: process.env,
-      shell: process.platform === "win32",
+    process.env.__RUNTIME_DEPLOYER_PRIVATE_KEY = wallet.privateKey; 
+    // Replace with deployYourContract() but with
+    await deployYourContract();
     });
 
-    hardhat.on("exit", code => {
-      process.exit(code || 0);
-    });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     console.error("Failed to decrypt private key. Wrong password?");
