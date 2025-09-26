@@ -56,11 +56,16 @@ function downloadFile(url, destination) {
       response.pipe(file);
       
       file.on('finish', () => {
-        file.close();
-        // Make binary executable
-        fs.chmodSync(destination, '755');
-        console.log(`✓ Downloaded ${path.basename(destination)}`);
-        resolve();
+        file.close((err) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+          // Make binary executable
+          fs.chmodSync(destination, '755');
+          console.log(`✓ Downloaded ${path.basename(destination)}`);
+          resolve();
+        });
       });
     });
     
@@ -78,6 +83,9 @@ function downloadFile(url, destination) {
       }
       reject(err);
     });
+    
+    // Ensure request is ended
+    request.end();
   });
 }
 
@@ -86,7 +94,9 @@ async function main() {
     const platform = getPlatform();
     console.log(`Detected platform: ${platform}`);
     
-    const binDir = path.join(__dirname, 'packages', 'asset-hub-pvm', 'bin');
+    // Find the project root (where package.json is)
+    const projectRoot = process.cwd();
+    const binDir = path.join(projectRoot, 'packages', 'asset-hub-pvm', 'bin');
     
     // Create bin directory if it doesn't exist
     if (!fs.existsSync(binDir)) {
@@ -95,15 +105,16 @@ async function main() {
     
     const urls = BINARY_URLS[platform];
     
-    // Download each binary
-    const downloads = Object.entries(urls).map(([name, url]) => {
+    // Download each binary sequentially for cleaner output
+    for (const [name, url] of Object.entries(urls)) {
       const destination = path.join(binDir, name);
-      return downloadFile(url, destination);
-    });
-    
-    await Promise.all(downloads);
+      await downloadFile(url, destination);
+    }
     console.log('✓ All binaries downloaded successfully!');
     console.log(`Binaries are available in: ${binDir}`);
+    
+    // Force exit to prevent hanging
+    process.exit(0);
     
   } catch (error) {
     console.error('❌ Error:', error.message);

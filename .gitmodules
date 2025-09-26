@@ -1,4 +1,0 @@
-[submodule "packages/pvm-container"]
-	path = packages/pvm-container
-	url = https://github.com/paritytech/smart-contracts-devcontainer.git
-	branch = main
