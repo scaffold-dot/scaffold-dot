@@ -43,7 +43,7 @@
     "next:format": "yarn workspace @se-2/nextjs format",
     "next:lint": "yarn workspace @se-2/nextjs lint",
     "next:serve": "yarn workspace @se-2/nextjs serve",
-    "node": "yarn polkadot:node",
+    "node": "./packages/asset-hub-pvm/bin/revive-dev-node",
     "polkadot:chain": "yarn workspace @se-2/polkadot-sdk chain",
     "polkadot:build": "yarn workspace @se-2/polkadot-sdk build",
     "polkadot:rpc": "yarn workspace @se-2/polkadot-sdk rpc",
