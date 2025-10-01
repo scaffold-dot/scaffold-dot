@@ -1,16 +1,18 @@
 import hre from "hardhat";
-import YourContract from "../ignition/modules/YourContract.ts";
-import generateTsAbis from "./generateTsAbis.ts";
+import YourContract from "../ignition/modules/YourContract";
+import generateTsAbis from "./generateTsAbis";
 
 // Export the main deployment functionality
 export async function deployYourContract() {
-  const { yourContract } = await hre.ignition.deploy(YourContract);
+  const { yourContract } = await (hre as any).ignition.deploy(YourContract);
   const contractAddress = await yourContract.getAddress();
   
   console.log(`YourContract deployed to: ${contractAddress}`);
   console.log('Writing abi to nextjs directory...');
   
-  await generateTsAbis(hre, yourContract);
+  await generateTsAbis(hre, {
+    YourContract: contractAddress
+  });
   console.log('Done!');
   
   return {

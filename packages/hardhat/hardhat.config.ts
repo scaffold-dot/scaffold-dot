@@ -1,12 +1,12 @@
 require('dotenv').config();
 require('@nomicfoundation/hardhat-toolbox');
 require('@parity/hardhat-polkadot');
-require('hardhat-deploy');
+//require('hardhat-deploy');
+require('@nomicfoundation/hardhat-ignition-ethers')
 
-import "hardhat-deploy-ethers";
+//import "hardhat-deploy-ethers";
 import { task } from 'hardhat/config';
 import generateTsAbis from './scripts/generateTsAbis';
-import devChainSpec from '../polkadot-sdk/templates/minimal/dev_chain_spec.json';
 
 // You can generate a random account with `yarn generate` or `yarn account:import` to import your existing PK
 // Address: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8

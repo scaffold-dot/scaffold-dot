@@ -13,7 +13,7 @@
     "flatten": "hardhat flatten",
     "fork": "MAINNET_FORKING_ENABLED=true hardhat node --network hardhat --no-deploy",
     "fund": "hardhat run scripts/fund.ts",
-    "deploy": "ts-node scripts/runHardhatDeployWithPK.ts",
+    "deploy": "npx hardhat run scripts/runHardhatDeployWithPK.ts",
     "format": "prettier --write './**/*.(ts|sol)'",
     "generate": "yarn account:generate",
     "hardhat-verify": "hardhat verify",
