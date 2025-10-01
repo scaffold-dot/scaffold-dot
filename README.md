@@ -28,7 +28,7 @@ Before you begin, you need to install the following tools:
 
 To get started with Scaffold-DOT, follow the steps below:
 
-1. Install the latest version of Scaffold-DOT, with Polkadot-SDK submodule.
+1. Install the latest version of Scaffold-DOT.
 
 ```
 git clone https://github.com/scaffold-dot/scaffold-dot.git scaffold-dot
