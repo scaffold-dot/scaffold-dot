@@ -52,12 +52,10 @@ export const useTransactor = (_walletClient?: WalletClient): TransactionFunc => 
     let blockExplorerTxURL = "";
     try {
       const network = await walletClient.getChainId();
-      // Get full transaction from public client
       const publicClient = getPublicClient(wagmiConfig);
 
       notificationId = notification.loading(<TxnNotification message="Awaiting for user confirmation" />);
       if (typeof tx === "function") {
-        // Tx is already prepared by the caller
         const result = await tx();
         transactionHash = result;
       } else if (tx != null) {
@@ -96,7 +94,6 @@ export const useTransactor = (_walletClient?: WalletClient): TransactionFunc => 
       console.error("⚡️ ~ file: useTransactor.ts ~ error", error);
       const message = getParsedError(error);
 
-      // if receipt was reverted, show notification with block explorer link and return error
       if (transactionReceipt?.status === "reverted") {
         notification.error(<TxnNotification message={message} blockExplorerLink={blockExplorerTxURL} />);
         throw error;

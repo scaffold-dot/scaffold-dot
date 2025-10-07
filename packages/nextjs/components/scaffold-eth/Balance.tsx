@@ -1,6 +1,6 @@
 "use client";
 
-import { Address, formatEther } from "viem";
+import { Address, formatEther, formatUnits } from "viem";
 import { useDisplayUsdMode } from "~~/hooks/scaffold-eth/useDisplayUsdMode";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
 import { useWatchBalance } from "~~/hooks/scaffold-eth/useWatchBalance";
@@ -49,7 +49,7 @@ export const Balance = ({ address, className = "", usdMode }: BalanceProps) => {
     );
   }
 
-  const formattedBalance = balance ? Number(formatEther(balance.value)) : 0;
+  const formattedBalance = balance ? Number(formatUnits(balance.value, targetNetwork.nativeCurrency.decimals)) : 0;
 
   return (
     <button

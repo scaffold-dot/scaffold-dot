@@ -9,9 +9,12 @@ import {
 } from "@rainbow-me/rainbowkit/wallets";
 import { rainbowkitBurnerWallet } from "burner-connector";
 import * as chains from "viem/chains";
-import scaffoldConfig from "~~/scaffold.config";
+import scaffoldConfig, { localNode } from "~~/scaffold.config";
 
 const { onlyLocalBurnerWallet, targetNetworks } = scaffoldConfig;
+
+// Define which chains are considered 'local'
+const localChainIds = [chains.hardhat.id, localNode.id];
 
 const wallets = [
   metaMaskWallet,
@@ -20,7 +23,7 @@ const wallets = [
   coinbaseWallet,
   rainbowWallet,
   safeWallet,
-  ...(!targetNetworks.some(network => network.id !== (chains.hardhat as chains.Chain).id) || !onlyLocalBurnerWallet
+  ...(!targetNetworks.some(network => !localChainIds.includes(network.id)) || !onlyLocalBurnerWallet
     ? [rainbowkitBurnerWallet]
     : []),
 ];

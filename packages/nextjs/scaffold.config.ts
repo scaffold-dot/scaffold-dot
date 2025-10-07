@@ -2,11 +2,27 @@ import * as chains from "viem/chains";
 import { defineChain } from "viem";
 
 // Define Paseo Passet Hub chain, not included in viem/chains
+export const localNode = defineChain({
+  id: 420420420,
+  name: "Local Asset Hub",
+  nativeCurrency: {
+    decimals: 12,
+    name: "Local DOT",
+    symbol: "MINI",
+  },
+  rpcUrls: {
+    default: { http: ["http://localhost:8545"] },
+  },
+  blockExplorers: {},
+  testnet: false,
+});
+
+// Define Paseo Passet Hub chain, not included in viem/chains
 export const passetHub = defineChain({
   id: 420420422,
   name: "Paseo Asset Hub",
   nativeCurrency: {
-    decimals: 10,
+    decimals: 12,
     name: "Paseo DOT",
     symbol: "PAS",
   },
@@ -44,6 +60,12 @@ export const kusamaHub = defineChain({
   testnet: false,
 });
 
+// Custom gas configuration for localNode
+export const LOCAL_CHAIN_GAS_CONFIG = {
+  gasLimit: 21000n,
+  gasPrice: 1000n,
+} as const;
+
 export type ScaffoldConfig = {
   targetNetworks: readonly chains.Chain[];
   pollingInterval: number;
@@ -57,7 +79,7 @@ export const DEFAULT_ALCHEMY_API_KEY = "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
 
 const scaffoldConfig = {
   // The networks on which your DApp is live
-  targetNetworks: [passetHub],
+  targetNetworks: [localNode],
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect if you only target the local network (default is 4000)
@@ -84,7 +106,7 @@ const scaffoldConfig = {
   walletConnectProjectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || "3a8170812b534d0ff9d794f19a901d64",
 
   // Only show the Burner Wallet when running on hardhat network
-  onlyLocalBurnerWallet: false,
+  onlyLocalBurnerWallet: true,
 } as const satisfies ScaffoldConfig;
 
 export default scaffoldConfig;

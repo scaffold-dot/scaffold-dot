@@ -41,7 +41,6 @@ export const WriteOnlyFunctionForm = ({
   const writeDisabled = !chain || chain?.id !== targetNetwork.id;
 
   const { data: result, isPending, writeContractAsync } = useWriteContract();
-
   const wagmiConfig = useConfig();
 
   const handleWrite = async () => {
@@ -54,8 +53,8 @@ export const WriteOnlyFunctionForm = ({
           args: getParsedContractFunctionArgs(form),
           value: BigInt(txValue),
         };
+        
         await simulateContractWriteAndNotifyError({ wagmiConfig, writeContractParams: writeContractObj });
-
         const makeWriteWithParams = () => writeContractAsync(writeContractObj);
         await writeTxn(makeWriteWithParams);
         onChange();
@@ -69,11 +68,11 @@ export const WriteOnlyFunctionForm = ({
   const { data: txResult } = useWaitForTransactionReceipt({
     hash: result,
   });
+  
   useEffect(() => {
     setDisplayedTxResult(txResult);
   }, [txResult]);
 
-  // TODO use `useMemo` to optimize also update in ReadOnlyFunctionForm
   const transformedFunction = transformAbiFunction(abiFunction);
   const inputs = transformedFunction.inputs.map((input, inputIndex) => {
     const key = getFunctionInputKey(abiFunction.name, input, inputIndex);
@@ -90,6 +89,7 @@ export const WriteOnlyFunctionForm = ({
       />
     );
   });
+  
   const zeroInputs = inputs.length === 0 && abiFunction.stateMutability !== "payable";
 
   return (
