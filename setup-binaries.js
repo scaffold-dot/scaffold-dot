@@ -7,16 +7,16 @@ const https = require('https');
 // Configuration - Revive binaries from GitHub releases
 const BINARY_URLS = {
   'linux-x64': {
-    'revive-dev-node': 'https://github.com/paritytech/hardhat-polkadot/releases/download/nodes-18137608118/revive-dev-node-linux-x64',
-    'eth-rpc': 'https://github.com/paritytech/hardhat-polkadot/releases/download/nodes-18137608118/eth-rpc-linux-x64'
+    'revive-dev-node': 'https://github.com/paritytech/hardhat-polkadot/releases/download/nodes-18323842311/revive-dev-node-linux-x64',
+    'eth-rpc': 'https://github.com/paritytech/hardhat-polkadot/releases/download/nodes-18323842311/eth-rpc-linux-x64'
   },
   'darwin-x64': {
-    'revive-dev-node': 'https://github.com/paritytech/hardhat-polkadot/releases/download/nodes-18137608118/revive-dev-node-darwin-x64',
-    'eth-rpc': 'https://github.com/paritytech/hardhat-polkadot/releases/download/nodes-18137608118/eth-rpc-darwin-x64'
+    'revive-dev-node': 'https://github.com/paritytech/hardhat-polkadot/releases/download/nodes-18323842311/revive-dev-node-darwin-x64',
+    'eth-rpc': 'https://github.com/paritytech/hardhat-polkadot/releases/download/nodes-18323842311/eth-rpc-darwin-x64'
   },
   'darwin-arm64': {
-    'revive-dev-node': 'https://github.com/paritytech/hardhat-polkadot/releases/download/nodes-18137608118/revive-dev-node-darwin-arm64',
-    'eth-rpc': 'https://github.com/paritytech/hardhat-polkadot/releases/download/nodes-18137608118/eth-rpc-darwin-arm64'
+    'revive-dev-node': 'https://github.com/paritytech/hardhat-polkadot/releases/download/nodes-18323842311/revive-dev-node-darwin-arm64',
+    'eth-rpc': 'https://github.com/paritytech/hardhat-polkadot/releases/download/nodes-18323842311/eth-rpc-darwin-arm64'
   }
 };
 
