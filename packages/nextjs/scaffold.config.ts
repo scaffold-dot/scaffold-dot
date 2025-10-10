@@ -15,6 +15,17 @@ export const localNode = defineChain({
   },
   blockExplorers: {},
   testnet: false,
+  // Custom fee configuration for pallet-revive's fixed fee model
+  // Polkadot revive requires: gas × gasPrice ≥ ~22-25 billion wei total
+  fees: {
+    estimateFeesPerGas: async () => {
+      // With typical gas limit of 1M: 25,000,000,000 / 1,000,000 = 25,000 per gas
+      return {
+        maxFeePerGas: 25000000n, // 25M per gas unit = 25B total
+        maxPriorityFeePerGas: 1000000n, // 1M tip
+      };
+    },
+  },
 });
 
 // Define Paseo Passet Hub chain, not included in viem/chains
@@ -61,9 +72,12 @@ export const kusamaHub = defineChain({
 });
 
 // Custom gas configuration for localNode
+// Note: Polkadot revive uses a fixed fee model (~22,008,157,000 wei)
+// The minimum gasPrice per unit = fixed_fee / gasLimit = 22,008,157,000 / 1,000,000 = 22,008.157
+// We need to ensure effective gas price meets this minimum
 export const LOCAL_CHAIN_GAS_CONFIG = {
-  gasLimit: 21000n,
-  gasPrice: 1000n,
+  gasLimit: 1000000n,
+  gasPrice: 22100000n, // ~22.1M per gas unit to cover fixed fee of ~22B total
 } as const;
 
 export type ScaffoldConfig = {

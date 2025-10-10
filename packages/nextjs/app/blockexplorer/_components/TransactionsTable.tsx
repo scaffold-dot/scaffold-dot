@@ -1,5 +1,5 @@
 import { TransactionHash } from "./TransactionHash";
-import { formatEther } from "viem";
+import { formatUnits } from "viem";
 import { Address } from "~~/components/scaffold-eth";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
 import { TransactionWithFunction } from "~~/utils/scaffold-eth";
@@ -57,7 +57,7 @@ export const TransactionsTable = ({ blocks, transactionReceipts }: TransactionsT
                       )}
                     </td>
                     <td className="text-right md:py-4">
-                      {formatEther(tx.value)} {targetNetwork.nativeCurrency.symbol}
+                      {formatUnits(tx.value, targetNetwork.nativeCurrency.decimals)} {targetNetwork.nativeCurrency.symbol}
                     </td>
                   </tr>
                 );

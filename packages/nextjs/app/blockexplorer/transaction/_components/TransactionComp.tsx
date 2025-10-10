@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Hash, Transaction, TransactionReceipt, formatEther, formatUnits } from "viem";
+import { Hash, Transaction, TransactionReceipt, formatUnits } from "viem";
 import { hardhat } from "viem/chains";
 import { usePublicClient } from "wagmi";
 import { Address } from "~~/components/scaffold-eth";
@@ -87,7 +87,7 @@ const TransactionComp = ({ txHash }: { txHash: Hash }) => {
                   <strong>Value:</strong>
                 </td>
                 <td>
-                  {formatEther(transaction.value)} {targetNetwork.nativeCurrency.symbol}
+                  {formatUnits(transaction.value, targetNetwork.nativeCurrency.decimals)} {targetNetwork.nativeCurrency.symbol}
                 </td>
               </tr>
               <tr>

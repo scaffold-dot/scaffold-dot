@@ -1,19 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Address as AddressType, createWalletClient, http, parseEther } from "viem";
-import { hardhat } from "viem/chains";
+import { Address as AddressType, createWalletClient, http, parseUnits } from "viem";
 import { useAccount } from "wagmi";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { Address, AddressInput, Balance, EtherInput } from "~~/components/scaffold-eth";
 import { useTransactor } from "~~/hooks/scaffold-eth";
+import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
 import { notification } from "~~/utils/scaffold-eth";
+import scaffoldConfig from "~~/scaffold.config";
 
 // Account index to use from generated hardhat accounts.
 const FAUCET_ACCOUNT_INDEX = 0;
 
+// Use the first target network from scaffold config
+const targetNetwork = scaffoldConfig.targetNetworks[0];
+
 const localWalletClient = createWalletClient({
-  chain: hardhat,
+  chain: targetNetwork,
   transport: http(),
 });
 
@@ -27,6 +31,7 @@ export const Faucet = () => {
   const [sendValue, setSendValue] = useState("");
 
   const { chain: ConnectedChain } = useAccount();
+  const { targetNetwork: connectedTargetNetwork } = useTargetNetwork();
 
   const faucetTxn = useTransactor(localWalletClient);
 
@@ -62,7 +67,8 @@ export const Faucet = () => {
       setLoading(true);
       await faucetTxn({
         to: inputAddress,
-        value: parseEther(sendValue as `${number}`),
+        // Use chain-specific decimals (12 for Polkadot chains, 18 for Ethereum)
+        value: parseUnits(sendValue as `${number}`, connectedTargetNetwork.nativeCurrency.decimals),
         account: faucetAddress,
       });
       setLoading(false);
@@ -74,8 +80,8 @@ export const Faucet = () => {
     }
   };
 
-  // Render only on local chain
-  if (ConnectedChain?.id !== hardhat.id) {
+  // Only render on local development network
+  if (ConnectedChain?.id !== targetNetwork.id) {
     return null;
   }
 

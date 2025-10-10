@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { InheritanceTooltip } from "./InheritanceTooltip";
 import { Abi, AbiFunction } from "abitype";
-import { Address, TransactionReceipt } from "viem";
+import { Address, TransactionReceipt, encodeFunctionData } from "viem";
 import { useAccount, useConfig, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { getWalletClient, getPublicClient } from "wagmi/actions";
 import {
   ContractInput,
   TxReceipt,
@@ -17,6 +18,7 @@ import { IntegerInput } from "~~/components/scaffold-eth";
 import { useTransactor } from "~~/hooks/scaffold-eth";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
 import { simulateContractWriteAndNotifyError } from "~~/utils/scaffold-eth/contract";
+import { localNode } from "../../../../scaffold.config"
 
 type WriteOnlyFunctionFormProps = {
   abi: Abi;
@@ -44,8 +46,34 @@ export const WriteOnlyFunctionForm = ({
   const wagmiConfig = useConfig();
 
   const handleWrite = async () => {
-    if (writeContractAsync) {
-      try {
+    try {
+    // For local chain, use sendTransaction with explicit gas
+      if (targetNetwork.id === localNode.id && writeContractAsync) {
+        const data = encodeFunctionData({
+          abi: abi,
+          functionName: abiFunction.name,
+          args: getParsedContractFunctionArgs(form),
+        });
+
+        const walletClient = await getWalletClient(wagmiConfig, { chainId: localNode.id });
+
+        await writeTxn(async () => {
+          // Use legacy transaction with explicit gasPrice instead of EIP-1559
+          // The eth-rpc adapter may handle legacy transactions differently
+          return walletClient!.sendTransaction({
+            to: contractAddress,
+            data,
+            value: BigInt(txValue),
+            gas: 1000000n,
+            gasPrice: 25000000n, // Legacy transaction with explicit gas price
+            type: 'legacy',
+          });
+        });
+        onChange();
+        return;
+      }
+
+      if (writeContractAsync) {
         const writeContractObj = {
           address: contractAddress,
           functionName: abiFunction.name,
@@ -53,15 +81,15 @@ export const WriteOnlyFunctionForm = ({
           args: getParsedContractFunctionArgs(form),
           value: BigInt(txValue),
         };
-        
+       
         await simulateContractWriteAndNotifyError({ wagmiConfig, writeContractParams: writeContractObj });
         const makeWriteWithParams = () => writeContractAsync(writeContractObj);
         await writeTxn(makeWriteWithParams);
         onChange();
-      } catch (e: any) {
+      }
+    } catch (e: any) {
         console.error("⚡️ ~ file: WriteOnlyFunctionForm.tsx:handleWrite ~ error", e);
       }
-    }
   };
 
   const [displayedTxResult, setDisplayedTxResult] = useState<TransactionReceipt>();

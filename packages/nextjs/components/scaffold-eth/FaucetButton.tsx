@@ -11,7 +11,7 @@ import { useTransactor } from "~~/hooks/scaffold-eth";
 import { useWatchBalance } from "~~/hooks/scaffold-eth/useWatchBalance";
 
 // Number of ETH faucet sends to an address
-const NUM_OF_ETH = "100";
+const NUM_OF_ETH = "1000";
 const FAUCET_PRIVATE_KEY = "0x5fb92d6e98884f76de468fa3f6278f8807c48bebc13595d45af5bdc4da702133";
 const faucetAccount = privateKeyToAccount(FAUCET_PRIVATE_KEY);
 

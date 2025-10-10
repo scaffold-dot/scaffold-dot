@@ -1,7 +1,8 @@
 import { ReactElement, useState } from "react";
-import { TransactionBase, TransactionReceipt, formatEther, isAddress, isHex } from "viem";
+import { TransactionBase, TransactionReceipt, formatUnits, isAddress, isHex } from "viem";
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/solid";
 import { Address } from "~~/components/scaffold-eth";
+import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
 import { replacer } from "~~/utils/scaffold-eth/common";
 
 type DisplayContent =
@@ -50,7 +51,9 @@ export const displayTxResult = (
 };
 
 const NumberDisplay = ({ value }: { value: bigint }) => {
-  const [isEther, setIsEther] = useState(false);
+  const [isFormatted, setIsFormatted] = useState(false);
+  const { targetNetwork } = useTargetNetwork();
+  const decimals = targetNetwork.nativeCurrency.decimals;
 
   const asNumber = Number(value);
   if (asNumber <= Number.MAX_SAFE_INTEGER && asNumber >= Number.MIN_SAFE_INTEGER) {
@@ -59,12 +62,12 @@ const NumberDisplay = ({ value }: { value: bigint }) => {
 
   return (
     <div className="flex items-baseline">
-      {isEther ? "Ξ" + formatEther(value) : String(value)}
+      {isFormatted ? "Ξ" + formatUnits(value, decimals) : String(value)}
       <span
         className="tooltip tooltip-secondary font-sans ml-2"
-        data-tip={isEther ? "Multiply by 1e18" : "Divide by 1e18"}
+        data-tip={isFormatted ? `Multiply by 1e${decimals}` : `Divide by 1e${decimals}`}
       >
-        <button className="btn btn-ghost btn-circle btn-xs" onClick={() => setIsEther(!isEther)}>
+        <button className="btn btn-ghost btn-circle btn-xs" onClick={() => setIsFormatted(!isFormatted)}>
           <ArrowsRightLeftIcon className="h-3 w-3 opacity-65" />
         </button>
       </span>
