@@ -53,16 +53,7 @@ module.exports = {
   },
   networks: {
     hardhat: {
-      polkavm: true,
-      nodeConfig: {
-        nodeBinaryPath: '../polkadot-sdk/target/release/substrate-node --dev',
-        rpcPort: 8000,
-        dev: true,
-      },
-      adapterConfig: {
-        adapterBinaryPath: '../polkadot-sdk/target/release/eth-rpc --dev',
-        dev: true,
-      },
+      chainId: 31337,
     },
     localNode: {
       polkavm: true,
