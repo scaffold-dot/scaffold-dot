@@ -31,7 +31,7 @@ export const localNode = defineChain({
 // Define Paseo Passet Hub chain, not included in viem/chains
 export const passetHub = defineChain({
   id: 420420422,
-  name: "Paseo Asset Hub",
+  name: "Passet Hub",
   nativeCurrency: {
     decimals: 12,
     name: "Paseo DOT",
