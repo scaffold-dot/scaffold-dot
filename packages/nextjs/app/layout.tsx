@@ -30,18 +30,6 @@ const unbounded = Unbounded({
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning className={unbounded.className}>
-      <head>
-        {/* put this in the <head> */}
-        {process.env.NODE_ENV === "development" && (
-          <Script
-            src="//unpkg.com/react-grab/dist/index.global.js"
-            crossOrigin="anonymous"
-            strategy="beforeInteractive"
-            data-enabled="true"
-          />
-        )}
-        {/* rest of your scripts go under */}
-      </head>
       <body>
         <ThemeProvider enableSystem>
           <ScaffoldEthAppWithProviders>{children}</ScaffoldEthAppWithProviders>
