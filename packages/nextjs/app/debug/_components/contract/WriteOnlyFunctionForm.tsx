@@ -49,7 +49,7 @@ export const WriteOnlyFunctionForm = ({
         functionName: abiFunction.name,
         abi: abi,
         args: parsedArgs,
-        value: txValue ? BigInt(txValue) : undefined,
+        value: txValue ? BigInt(txValue) : 0n,
       });
       
       console.log("Transaction sent:", txHash);

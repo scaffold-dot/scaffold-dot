@@ -4,6 +4,7 @@ import { ThemeProvider } from "~~/components/ThemeProvider";
 import "~~/styles/globals.css";
 import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
 import { Unbounded } from "next/font/google";
+import Script from "next/script";
 
 export const metadata = getMetadata({
   title: "Scaffold-DOT App",
@@ -29,6 +30,18 @@ const unbounded = Unbounded({
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning className={unbounded.className}>
+      <head>
+        {/* put this in the <head> */}
+        {process.env.NODE_ENV === "development" && (
+          <Script
+            src="//unpkg.com/react-grab/dist/index.global.js"
+            crossOrigin="anonymous"
+            strategy="beforeInteractive"
+            data-enabled="true"
+          />
+        )}
+        {/* rest of your scripts go under */}
+      </head>
       <body>
         <ThemeProvider enableSystem>
           <ScaffoldEthAppWithProviders>{children}</ScaffoldEthAppWithProviders>

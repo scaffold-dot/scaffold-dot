@@ -31,3 +31,6 @@ dist
 packages/asset-hub-pvm/bin/
 
 packages/hardhat/ignition/deployments
+
+packages/nextjs/contracts/deployedContracts.ts
+
