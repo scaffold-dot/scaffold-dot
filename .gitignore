@@ -29,3 +29,5 @@ dist
 
 # asset hub binaries
 packages/asset-hub-pvm/bin/
+
+packages/hardhat/ignition/deployments

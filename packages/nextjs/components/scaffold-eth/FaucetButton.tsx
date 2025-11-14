@@ -39,7 +39,8 @@ export const FaucetButton = () => {
       const hash = await localWalletClient.sendTransaction({
         account: faucetAccount,
         to: address,
-        value: parseUnits(NUM_OF_ETH, 12),
+        // Should be 18 decimals on PolkaVM
+        value: parseUnits(NUM_OF_ETH, 18),
       });
 
       console.log("Transaction sent:", hash)
