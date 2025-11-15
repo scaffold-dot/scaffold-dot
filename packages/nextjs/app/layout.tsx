@@ -4,6 +4,7 @@ import { ThemeProvider } from "~~/components/ThemeProvider";
 import "~~/styles/globals.css";
 import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
 import { Unbounded } from "next/font/google";
+import Script from "next/script";
 
 export const metadata = getMetadata({
   title: "Scaffold-DOT App",

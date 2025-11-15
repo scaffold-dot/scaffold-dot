@@ -6,8 +6,143 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
   420420420: {
+    Counter: {
+      address: "0x9c1da847B31C0973F26b1a2A3d5c04365a867703",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "_initialCount",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "newCount",
+              type: "uint256",
+            },
+          ],
+          name: "CountDecremented",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "newCount",
+              type: "uint256",
+            },
+          ],
+          name: "CountIncremented",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "newCount",
+              type: "uint256",
+            },
+          ],
+          name: "CountReset",
+          type: "event",
+        },
+        {
+          inputs: [],
+          name: "decrement",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getCount",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "increment",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "reset",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    Storage: {
+      address: "0xd528a533599223CA6B5EBdd1C32A241432FB1AE8",
+      abi: [
+        {
+          inputs: [],
+          name: "retrieve",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "num",
+              type: "uint256",
+            },
+          ],
+          name: "store",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ],
+      inheritedFunctions: {},
+    },
     YourContract: {
-      address: "0xc01Ee7f10EA4aF4673cFff62710E1D7792aBa8f3",
+      address: "0x527FC4060Ac7Bf9Cd19608EDEeE8f09063A16cd4",
       abi: [
         {
           inputs: [
