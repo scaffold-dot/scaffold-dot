@@ -47,15 +47,6 @@ export const WriteOnlyFunctionForm = ({
     if (!writeContractAsync) return;
     
     try {
-      // const parsedArgs = getParsedContractFunctionArgs(form);
-      // const txHash = await writeContractAsync({
-      //   address: contractAddress,
-      //   functionName: abiFunction.name,
-      //   abi: abi,
-      //   args: parsedArgs,
-      //   value: txValue ? BigInt(txValue) : 0n,
-      // });
-      
 
       const writeContractObj = {
         address: contractAddress,
@@ -72,7 +63,6 @@ export const WriteOnlyFunctionForm = ({
       await writeTxn(makeWriteWithParams);
 
 
-      console.log("Transaction sent:", result);
       onChange();
     } catch (e: any) {
       console.error("⚡️ ~ file: WriteOnlyFunctionForm.tsx:handleWrite ~ error", e);
