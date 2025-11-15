@@ -6,7 +6,7 @@ export const localNode = defineChain({
   id: 420420420,
   name: "Local Asset Hub",
   nativeCurrency: {
-    decimals: 12,
+    decimals: 18,
     name: "Local DOT",
     symbol: "MINI",
   },

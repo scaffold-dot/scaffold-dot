@@ -75,6 +75,50 @@ function getInheritedFunctions(sources: Record<string, any>, contractName: strin
   return inheritedFunctions;
 }
 
+/**
+ * Get all contract artifact names from a .sol file
+ * Scans the artifacts-pvm directory and returns all contract names (excluding .dbg.json files)
+ */
+function getAllContractArtifactsFromSolFile(solFileName: string): string[] {
+  const solDirPath = `${ARTIFACTS_DIR}/contracts/${solFileName}`;
+  
+  if (!fs.existsSync(solDirPath)) {
+    console.warn(`Artifacts directory not found for ${solFileName}`);
+    return [];
+  }
+
+  const files = fs.readdirSync(solDirPath, { withFileTypes: true });
+  const contractNames = files
+    .filter(dirent => dirent.isFile() && dirent.name.endsWith('.json') && !dirent.name.endsWith('.dbg.json'))
+    .map(dirent => dirent.name.replace('.json', ''));
+
+  return contractNames;
+}
+
+/**
+ * Find the .sol file that contains a given contract by scanning artifacts
+ */
+function findSolFileForContract(contractName: string): string | null {
+  const contractsDir = `${ARTIFACTS_DIR}/contracts`;
+  
+  if (!fs.existsSync(contractsDir)) {
+    return null;
+  }
+
+  const solDirs = fs.readdirSync(contractsDir, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory() && dirent.name.endsWith('.sol'))
+    .map(dirent => dirent.name);
+
+  for (const solDir of solDirs) {
+    const artifactPath = `${contractsDir}/${solDir}/${contractName}.json`;
+    if (fs.existsSync(artifactPath)) {
+      return solDir;
+    }
+  }
+
+  return null;
+}
+
 // Use either hardhat-deploy directory structure if it exists, or directly get contracts from artifacts
 async function getContractDataFromDeployments(hre: HardhatRuntimeEnvironment, deployedContracts?: Record<string, string>) {
   // If deployed contracts are provided, use them first (prioritize over deployments directory)
@@ -85,47 +129,53 @@ async function getContractDataFromDeployments(hre: HardhatRuntimeEnvironment, de
     const network = await hre.network.provider.send('eth_chainId');
     const chainId = parseInt(network, 16).toString();
     const contracts = {} as Record<string, any>;
+    const processedSolFiles = new Set<string>(); // Track which .sol files we've already processed
     
-    // For each deployed contract, get its ABI from artifacts
+    // For each deployed contract, get its ABI from artifacts AND all other contracts from the same .sol file
     for (const [contractName, contractAddress] of Object.entries(deployedContracts)) {
       console.log(`Processing contract: ${contractName} at ${contractAddress}`);
       
-      // Find the contract artifact
-      const artifactPath = `${ARTIFACTS_DIR}/contracts/${contractName}.sol/${contractName}.json`;
-      if (!fs.existsSync(artifactPath)) {
-        console.warn(`Artifact not found for ${contractName} at ${artifactPath}`);
-        console.warn(`Attempting fallback paths...`);
-        // Try alternative paths that might exist
-        if (fs.existsSync(`${ARTIFACTS_DIR}/contracts`)) {
-          const contractDirs = fs.readdirSync(`${ARTIFACTS_DIR}/contracts`, { withFileTypes: true })
-            .filter(dirent => dirent.isDirectory())
-            .map(dirent => dirent.name);
-          
-          let found = false;
-          for (const dir of contractDirs) {
-            if (dir.endsWith('.sol') && fs.existsSync(`${ARTIFACTS_DIR}/contracts/${dir}/${contractName}.json`)) {
-              found = true;
-              console.log(`Found artifact at ${ARTIFACTS_DIR}/contracts/${dir}/${contractName}.json`);
-              const { abi, metadata } = JSON.parse(fs.readFileSync(`${ARTIFACTS_DIR}/contracts/${dir}/${contractName}.json`).toString());
-              const inheritedFunctions = metadata ? getInheritedFunctions(JSON.parse(metadata).sources, contractName) : {};
-              contracts[contractName] = { address: contractAddress, abi, inheritedFunctions };
-              break;
-            }
-          }
-          
-          if (!found) {
-            console.warn(`Could not find artifact for ${contractName} in any contract directory`);
-            continue;
-          }
-        } else {
-          console.warn(`Could not find contracts directory in ${ARTIFACTS_DIR}`);
-          continue;
-        }
-      } else {
-        const { abi, metadata } = JSON.parse(fs.readFileSync(artifactPath).toString());
-        const inheritedFunctions = metadata ? getInheritedFunctions(JSON.parse(metadata).sources, contractName) : {};
-        contracts[contractName] = { address: contractAddress, abi, inheritedFunctions };
+      // Find which .sol file this contract belongs to
+      const solFile = findSolFileForContract(contractName);
+      
+      if (!solFile) {
+        console.warn(`Could not find .sol file for contract ${contractName}`);
+        continue;
       }
+      
+      // If we've already processed this .sol file, skip it (all artifacts from it are already added)
+      if (processedSolFiles.has(solFile)) {
+        console.log(`Skipping ${contractName} - already processed all contracts from ${solFile}`);
+        continue;
+      }
+      
+      // Mark this .sol file as processed
+      processedSolFiles.add(solFile);
+      
+      // Get ALL contract artifacts from this .sol file (for logging)
+      const allArtifacts = getAllContractArtifactsFromSolFile(solFile);
+      console.log(`Found ${allArtifacts.length} artifacts in ${solFile}: ${allArtifacts.join(', ')}`);
+      
+      // IMPORTANT: Only add the artifact that matches the deployed contract name
+      // We only deployed the contract specified in contractName, not all contracts from the .sol file
+      const artifactPath = `${ARTIFACTS_DIR}/contracts/${solFile}/${contractName}.json`;
+      
+      if (!fs.existsSync(artifactPath)) {
+        console.warn(`⚠️  Artifact not found for deployed contract "${contractName}" at ${artifactPath}`);
+        console.warn(`   Available artifacts in ${solFile}: ${allArtifacts.join(', ')}`);
+        continue;
+      }
+      
+      const { abi, metadata } = JSON.parse(fs.readFileSync(artifactPath).toString());
+      const inheritedFunctions = metadata ? getInheritedFunctions(JSON.parse(metadata).sources, contractName) : {};
+      
+      contracts[contractName] = { 
+        address: contractAddress, 
+        abi, 
+        inheritedFunctions 
+      };
+      
+      console.log(`✅ Added ${contractName} with address ${contractAddress}`);
     }
     
     return { [chainId]: contracts };
@@ -189,3 +239,4 @@ const generateTsAbis = async function (hre: HardhatRuntimeEnvironment, deployedC
 };
 
 export default generateTsAbis;
+export { getAllContractArtifactsFromSolFile };

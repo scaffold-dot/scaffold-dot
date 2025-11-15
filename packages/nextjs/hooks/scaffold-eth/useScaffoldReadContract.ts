@@ -32,15 +32,23 @@ export const useScaffoldReadContract = <
   chainId,
   ...readConfig
 }: UseScaffoldReadConfig<TContractName, TFunctionName>) => {
+
+
   const selectedNetwork = useSelectedNetwork(chainId);
+
+
   const { data: deployedContract } = useDeployedContractInfo({
     contractName,
     chainId: selectedNetwork.id as AllowedChainIds,
   });
 
+
   const { query: queryOptions, watch, ...readContractConfig } = readConfig;
   // set watch to true by default
   const defaultWatch = watch ?? true;
+
+  const isQueryEnabled = !Array.isArray(args) || !args.some(arg => arg === undefined);
+
 
   const readContractHookRes = useReadContract({
     chainId: selectedNetwork.id,
@@ -50,7 +58,7 @@ export const useScaffoldReadContract = <
     args,
     ...(readContractConfig as any),
     query: {
-      enabled: !Array.isArray(args) || !args.some(arg => arg === undefined),
+      enabled: isQueryEnabled && (queryOptions?.enabled ?? true),
       ...queryOptions,
     },
   }) as Omit<ReturnType<typeof useReadContract>, "data" | "refetch"> & {
@@ -59,6 +67,7 @@ export const useScaffoldReadContract = <
       options?: RefetchOptions | undefined,
     ) => Promise<QueryObserverResult<AbiFunctionReturnType<ContractAbi, TFunctionName>, ReadContractErrorType>>;
   };
+
 
   const queryClient = useQueryClient();
   const { data: blockNumber } = useBlockNumber({
@@ -71,6 +80,11 @@ export const useScaffoldReadContract = <
 
   useEffect(() => {
     if (defaultWatch) {
+      console.log("🔄 [useScaffoldReadContract] Invalidating queries on block change:", {
+        blockNumber,
+        contractName,
+        functionName,
+      });
       queryClient.invalidateQueries({ queryKey: readContractHookRes.queryKey });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
