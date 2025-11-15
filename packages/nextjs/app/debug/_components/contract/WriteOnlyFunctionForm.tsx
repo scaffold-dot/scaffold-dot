@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { InheritanceTooltip } from "./InheritanceTooltip";
 import { Abi, AbiFunction } from "abitype";
 import { Address, TransactionReceipt } from "viem";
-import { useAccount, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { useAccount, useConfig, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import {
   ContractInput,
   TxReceipt,
@@ -15,6 +15,8 @@ import {
 } from "~~/app/debug/_components/contract";
 import { IntegerInput } from "~~/components/scaffold-eth";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
+import { useTransactor } from "~~/hooks/scaffold-eth/useTransactor";
+import { simulateContractWriteAndNotifyError } from "~~/utils/scaffold-eth/contract";
 
 type WriteOnlyFunctionFormProps = {
   abi: Abi;
@@ -38,21 +40,39 @@ export const WriteOnlyFunctionForm = ({
   const writeDisabled = !chain || chain?.id !== targetNetwork.id;
 
   const { data: result, isPending, writeContractAsync } = useWriteContract();
-
+  const wagmiConfig = useConfig();
+  const writeTxn = useTransactor();
+  
   const handleWrite = async () => {
     if (!writeContractAsync) return;
     
     try {
-      const parsedArgs = getParsedContractFunctionArgs(form);
-      const txHash = await writeContractAsync({
+      // const parsedArgs = getParsedContractFunctionArgs(form);
+      // const txHash = await writeContractAsync({
+      //   address: contractAddress,
+      //   functionName: abiFunction.name,
+      //   abi: abi,
+      //   args: parsedArgs,
+      //   value: txValue ? BigInt(txValue) : 0n,
+      // });
+      
+
+      const writeContractObj = {
         address: contractAddress,
         functionName: abiFunction.name,
         abi: abi,
-        args: parsedArgs,
+        args: getParsedContractFunctionArgs(form),
         value: txValue ? BigInt(txValue) : 0n,
-      });
-      
-      console.log("Transaction sent:", txHash);
+      };
+
+
+
+      await simulateContractWriteAndNotifyError({ wagmiConfig, writeContractParams: writeContractObj });
+      const makeWriteWithParams = () => writeContractAsync(writeContractObj);
+      await writeTxn(makeWriteWithParams);
+
+
+      console.log("Transaction sent:", result);
       onChange();
     } catch (e: any) {
       console.error("⚡️ ~ file: WriteOnlyFunctionForm.tsx:handleWrite ~ error", e);

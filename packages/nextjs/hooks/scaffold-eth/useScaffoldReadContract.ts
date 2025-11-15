@@ -32,50 +32,23 @@ export const useScaffoldReadContract = <
   chainId,
   ...readConfig
 }: UseScaffoldReadConfig<TContractName, TFunctionName>) => {
-  // Debug: Log initial hook call
-  console.log("🔍 [useScaffoldReadContract] Hook called:", {
-    contractName,
-    functionName,
-    args,
-    chainId,
-  });
+
 
   const selectedNetwork = useSelectedNetwork(chainId);
-  console.log("🌐 [useScaffoldReadContract] Selected network:", {
-    id: selectedNetwork.id,
-    name: selectedNetwork.name,
-  });
+
 
   const { data: deployedContract } = useDeployedContractInfo({
     contractName,
     chainId: selectedNetwork.id as AllowedChainIds,
   });
 
-  // Debug: Log deployed contract info
-  console.log("📋 [useScaffoldReadContract] Deployed contract info:", {
-    contractName,
-    address: deployedContract?.address,
-    hasAbi: !!deployedContract?.abi,
-    abiLength: deployedContract?.abi?.length,
-    abiFunctions: deployedContract?.abi
-      ?.filter((item: any) => item.type === "function")
-      .map((item: any) => item.name),
-    targetFunctionExists: deployedContract?.abi?.some(
-      (item: any) => item.type === "function" && item.name === functionName,
-    ),
-  });
 
   const { query: queryOptions, watch, ...readContractConfig } = readConfig;
   // set watch to true by default
   const defaultWatch = watch ?? true;
 
   const isQueryEnabled = !Array.isArray(args) || !args.some(arg => arg === undefined);
-  console.log("⚙️ [useScaffoldReadContract] Query config:", {
-    enabled: isQueryEnabled && (queryOptions?.enabled ?? true),
-    watch: defaultWatch,
-    args,
-    hasUndefinedArgs: Array.isArray(args) && args.some(arg => arg === undefined),
-  });
+
 
   const readContractHookRes = useReadContract({
     chainId: selectedNetwork.id,
@@ -95,34 +68,6 @@ export const useScaffoldReadContract = <
     ) => Promise<QueryObserverResult<AbiFunctionReturnType<ContractAbi, TFunctionName>, ReadContractErrorType>>;
   };
 
-  // Debug: Log read contract hook result
-  console.log("📊 [useScaffoldReadContract] Read contract hook result:", {
-    contractName,
-    functionName,
-    address: deployedContract?.address,
-    data: readContractHookRes.data,
-    error: readContractHookRes.error,
-    isLoading: readContractHookRes.isLoading,
-    isError: readContractHookRes.isError,
-    isSuccess: readContractHookRes.isSuccess,
-    status: readContractHookRes.status,
-    errorMessage: readContractHookRes.error?.message,
-    errorName: readContractHookRes.error?.name,
-    errorDetails: readContractHookRes.error,
-  });
-
-  // Debug: Log error details if present
-  if (readContractHookRes.error) {
-    console.error("❌ [useScaffoldReadContract] Error details:", {
-      contractName,
-      functionName,
-      address: deployedContract?.address,
-      error: readContractHookRes.error,
-      errorMessage: readContractHookRes.error?.message,
-      errorStack: readContractHookRes.error?.stack,
-      errorCause: readContractHookRes.error?.cause,
-    });
-  }
 
   const queryClient = useQueryClient();
   const { data: blockNumber } = useBlockNumber({
