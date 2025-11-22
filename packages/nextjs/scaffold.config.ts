@@ -33,7 +33,7 @@ export const passetHub = defineChain({
   id: 420420422,
   name: "Passet Hub",
   nativeCurrency: {
-    decimals: 12,
+    decimals: 18,
     name: "Paseo DOT",
     symbol: "PAS",
   },
@@ -55,7 +55,7 @@ export const kusamaHub = defineChain({
   id: 420420418,
   name: "Kusama Hub",
   nativeCurrency: {
-    decimals: 12,
+    decimals: 18,
     name: "Kusama",
     symbol: "KSM",
   },
