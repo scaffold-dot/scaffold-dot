@@ -78,6 +78,19 @@ Visit your app on: `http://localhost:3000`. You can interact with your smart con
 
 Scaffold-DOT will generate an encrypted private key. This is the most secure way to generate and store your private key.
 
+You'll need to change two configuration files.
+
+### hardhat.config.ts
+
+Update the `defaultNetwork` to the network you want to deploy to.
+
+### scaffold-config.ts
+
+Update `targetNetworks` to include the networks that your frontend will support.
+
+Fund your account with a faucet, run yarn deploy, type your password, and your contract deployment confirmation will print in the console.
+
+Run your frontend server, and connect with your browser wallet. You are now able to interact with your smart contract.
 
 **What's next**:
 
