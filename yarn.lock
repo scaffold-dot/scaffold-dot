@@ -3402,74 +3402,74 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:15.5.6":
-  version: 15.5.6
-  resolution: "@next/env@npm:15.5.6"
-  checksum: 3c2694103798ec17b11b9222d143ddc5d872ac397c75cb4b82b3e41f2de073cccd7e6fb06d53bc220b5c47a0bfd6e8a9890a5dd60bdf1722d2ae9a80124ae502
+"@next/env@npm:15.5.7":
+  version: 15.5.7
+  resolution: "@next/env@npm:15.5.7"
+  checksum: 2d193f53726c45edfdc8952e3a52a54c2a725090aa614e8ffaf3e0bb872a6bdb91468ea60a0713859549ed5b0df8664db8c8e52117cd866695aefcc85b3c6a5a
   languageName: node
   linkType: hard
 
-"@next/eslint-plugin-next@npm:15.5.6":
-  version: 15.5.6
-  resolution: "@next/eslint-plugin-next@npm:15.5.6"
+"@next/eslint-plugin-next@npm:15.5.7":
+  version: 15.5.7
+  resolution: "@next/eslint-plugin-next@npm:15.5.7"
   dependencies:
     fast-glob: 3.3.1
-  checksum: e268e28ede79bf197bdd73990c861132aefb1fc80478f1fcce4f9af97461fd85ac6d4a6fd935fb032d3c7915a0366b146dea0f3c2c6cbc8062f231a05e57438d
+  checksum: 0d70a87aa31510baaf6bdd2f7f625a27204cc26af4f25ced41ee689419879e52aabf80d040f3f2019fd66e058888976948d80e51e25fa1401bf92333b8cc308a
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-arm64@npm:15.5.6":
-  version: 15.5.6
-  resolution: "@next/swc-darwin-arm64@npm:15.5.6"
+"@next/swc-darwin-arm64@npm:15.5.7":
+  version: 15.5.7
+  resolution: "@next/swc-darwin-arm64@npm:15.5.7"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-x64@npm:15.5.6":
-  version: 15.5.6
-  resolution: "@next/swc-darwin-x64@npm:15.5.6"
+"@next/swc-darwin-x64@npm:15.5.7":
+  version: 15.5.7
+  resolution: "@next/swc-darwin-x64@npm:15.5.7"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-gnu@npm:15.5.6":
-  version: 15.5.6
-  resolution: "@next/swc-linux-arm64-gnu@npm:15.5.6"
+"@next/swc-linux-arm64-gnu@npm:15.5.7":
+  version: 15.5.7
+  resolution: "@next/swc-linux-arm64-gnu@npm:15.5.7"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-musl@npm:15.5.6":
-  version: 15.5.6
-  resolution: "@next/swc-linux-arm64-musl@npm:15.5.6"
+"@next/swc-linux-arm64-musl@npm:15.5.7":
+  version: 15.5.7
+  resolution: "@next/swc-linux-arm64-musl@npm:15.5.7"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-gnu@npm:15.5.6":
-  version: 15.5.6
-  resolution: "@next/swc-linux-x64-gnu@npm:15.5.6"
+"@next/swc-linux-x64-gnu@npm:15.5.7":
+  version: 15.5.7
+  resolution: "@next/swc-linux-x64-gnu@npm:15.5.7"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-musl@npm:15.5.6":
-  version: 15.5.6
-  resolution: "@next/swc-linux-x64-musl@npm:15.5.6"
+"@next/swc-linux-x64-musl@npm:15.5.7":
+  version: 15.5.7
+  resolution: "@next/swc-linux-x64-musl@npm:15.5.7"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-win32-arm64-msvc@npm:15.5.6":
-  version: 15.5.6
-  resolution: "@next/swc-win32-arm64-msvc@npm:15.5.6"
+"@next/swc-win32-arm64-msvc@npm:15.5.7":
+  version: 15.5.7
+  resolution: "@next/swc-win32-arm64-msvc@npm:15.5.7"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-win32-x64-msvc@npm:15.5.6":
-  version: 15.5.6
-  resolution: "@next/swc-win32-x64-msvc@npm:15.5.6"
+"@next/swc-win32-x64-msvc@npm:15.5.7":
+  version: 15.5.7
+  resolution: "@next/swc-win32-x64-msvc@npm:15.5.7"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -5377,18 +5377,18 @@ __metadata:
     burner-connector: 0.0.12
     daisyui: ^5.0.9
     eslint: ^9.23.0
-    eslint-config-next: ^15.2.3
+    eslint-config-next: ^15.2.6
     eslint-config-prettier: ^10.1.1
     eslint-plugin-prettier: ^5.2.4
     kubo-rpc-client: ^5.0.2
-    next: ^15.2.3
+    next: ^15.2.6
     next-nprogress-bar: ^2.3.13
     next-themes: ^0.3.0
     postcss: ^8.4.45
     prettier: ^3.5.3
     qrcode.react: ^4.0.1
-    react: ^19.0.0
-    react-dom: ^19.0.0
+    react: ^19.0.0-rc.3
+    react-dom: ^19.0.0-rc.3
     react-hot-toast: ^2.4.0
     tailwindcss: ^4.1.3
     type-fest: ^4.26.1
@@ -10893,11 +10893,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-next@npm:^15.2.3":
-  version: 15.5.6
-  resolution: "eslint-config-next@npm:15.5.6"
+"eslint-config-next@npm:^15.2.6":
+  version: 15.5.7
+  resolution: "eslint-config-next@npm:15.5.7"
   dependencies:
-    "@next/eslint-plugin-next": 15.5.6
+    "@next/eslint-plugin-next": 15.5.7
     "@rushstack/eslint-patch": ^1.10.3
     "@typescript-eslint/eslint-plugin": ^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0
     "@typescript-eslint/parser": ^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0
@@ -10913,7 +10913,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 6efc0a3444ca51adbc0b82e945a1988e1bd42bc153bd64fbbe10ae0e34d8473256e516f2afb138ecbba401802691fedea18d9f7fe798fbd79b4ccf8705c83554
+  checksum: fd1813c7ef4e33ec297b86dd0de75879e10514b12cb04a103e7a5b8c5f27d2ea0a91dd15e6d530006c9fe3e7e18f815e900bd6ba117c3b8fbe311c38c340d899
   languageName: node
   linkType: hard
 
@@ -15498,19 +15498,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:^15.2.3":
-  version: 15.5.6
-  resolution: "next@npm:15.5.6"
+"next@npm:^15.2.6":
+  version: 15.5.7
+  resolution: "next@npm:15.5.7"
   dependencies:
-    "@next/env": 15.5.6
-    "@next/swc-darwin-arm64": 15.5.6
-    "@next/swc-darwin-x64": 15.5.6
-    "@next/swc-linux-arm64-gnu": 15.5.6
-    "@next/swc-linux-arm64-musl": 15.5.6
-    "@next/swc-linux-x64-gnu": 15.5.6
-    "@next/swc-linux-x64-musl": 15.5.6
-    "@next/swc-win32-arm64-msvc": 15.5.6
-    "@next/swc-win32-x64-msvc": 15.5.6
+    "@next/env": 15.5.7
+    "@next/swc-darwin-arm64": 15.5.7
+    "@next/swc-darwin-x64": 15.5.7
+    "@next/swc-linux-arm64-gnu": 15.5.7
+    "@next/swc-linux-arm64-musl": 15.5.7
+    "@next/swc-linux-x64-gnu": 15.5.7
+    "@next/swc-linux-x64-musl": 15.5.7
+    "@next/swc-win32-arm64-msvc": 15.5.7
+    "@next/swc-win32-x64-msvc": 15.5.7
     "@swc/helpers": 0.5.15
     caniuse-lite: ^1.0.30001579
     postcss: 8.4.31
@@ -15553,7 +15553,7 @@ __metadata:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: 36f05e5ecd62a70800617d229061130be3aca98d581de03ae31ff368118e0e5f40de22eb1c4863c99caecab9e52c8fdcdf285720eb549fce7948bad2dbd1bbbf
+  checksum: b31349fa630c5238b008a1192e06c33b72fc04652b37113b5982ab26d59c0a09b9ba224d508dc7eb582ec39e5313f9dd2d5dbc2b64c9b72310cebd111479fb59
   languageName: node
   linkType: hard
 
@@ -17360,14 +17360,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^19.0.0":
-  version: 19.2.0
-  resolution: "react-dom@npm:19.2.0"
+"react-dom@npm:^19.0.0-rc.3":
+  version: 19.2.1
+  resolution: "react-dom@npm:19.2.1"
   dependencies:
     scheduler: ^0.27.0
   peerDependencies:
-    react: ^19.2.0
-  checksum: b6ec952f68a29dcc847143ad48974477e1d3b95cb0a6e0039dd93c7fe64d0ef51f2ca09a19c5eb892ba625ba88c4bcc6f8bc3bdd1c33ccc3f6f17acabbb4882f
+    react: ^19.2.1
+  checksum: 45a7c57696b6fcc9f018a1626a0c5f6da7085510bcebb9ab585414ea1b73061df1139d57b4384ece47c0a53d46045c28b93fe85e249771eca8cfac8d3e613833
   languageName: node
   linkType: hard
 
@@ -17451,10 +17451,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^19.0.0":
-  version: 19.2.0
-  resolution: "react@npm:19.2.0"
-  checksum: 33dd01bf699e1c5040eb249e0f552519adf7ee90b98c49d702a50bf23af6852ea46023a5f7f93966ab10acd7a45428fa0f193c686ecdaa7a75a03886e53ec3fe
+"react@npm:^19.0.0-rc.3":
+  version: 19.2.1
+  resolution: "react@npm:19.2.1"
+  checksum: 9b32ace5c532ed78bc5a907bfec77d966c8f117049d9bf06b627c4cebe5ef2c899f18ed283f8ed5b85346176b5ccc5328ab6fae0b389f2936a87575ce0e47670
   languageName: node
   linkType: hard
 
