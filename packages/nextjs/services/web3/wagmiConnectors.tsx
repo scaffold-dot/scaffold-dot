@@ -1,53 +1,15 @@
-import { connectorsForWallets } from "@rainbow-me/rainbowkit";
-import {
-  coinbaseWallet,
-  ledgerWallet,
-  metaMaskWallet,
-  rainbowWallet,
-  safeWallet,
-  walletConnectWallet,
-} from "@rainbow-me/rainbowkit/wallets";
-import { rainbowkitBurnerWallet } from "burner-connector";
-import * as chains from "viem/chains";
-import scaffoldConfig, { localNode } from "~~/scaffold.config";
+import scaffoldConfig from "~~/scaffold.config";
 
-const { onlyLocalBurnerWallet, targetNetworks } = scaffoldConfig;
-
-// Define which chains are considered 'local'
-const localChainIds = [chains.hardhat.id, localNode.id];
-
-const wallets = [
-  metaMaskWallet,
-  walletConnectWallet,
-  ledgerWallet,
-  coinbaseWallet,
-  rainbowWallet,
-  safeWallet,
-  ...(!targetNetworks.some(network => !localChainIds.includes(network.id)) || !onlyLocalBurnerWallet
-    ? [rainbowkitBurnerWallet]
-    : []),
-];
+const { walletConnectProjectId } = scaffoldConfig;
 
 /**
- * wagmi connectors for the wagmi context
+ * Metadata for the AppKit
  */
-export const wagmiConnectors = () => {
-  // only create connector on client side to avoid SSR issues
-  // TODO: update when https://github.com/rainbow-me/rainbowkit/issues/2476 is resolved
-  if (typeof window === "undefined") {
-    return [];
-  }
-
-  return connectorsForWallets(
-    [
-      {
-        groupName: "Supported Wallets",
-        wallets,
-      },
-    ],
-    {
-      appName: 'scaffold-dot',
-      projectId: scaffoldConfig.walletConnectProjectId,
-    },
-  );
+export const metadata = {
+  name: "Scaffold-DOT",
+  description: "Scaffold-DOT - Build on Polkadot Asset Hub with Solidity",
+  url: "https://scaffold-dot.vercel.app",
+  icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
+
+export { walletConnectProjectId };

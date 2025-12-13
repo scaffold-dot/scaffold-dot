@@ -13,7 +13,12 @@ export const localNode = defineChain({
   rpcUrls: {
     default: { http: ["http://localhost:8545"] },
   },
-  blockExplorers: {},
+  blockExplorers: {
+    default: {
+      name: "Blockscout",
+      url: "https://blockscout.com",
+    },
+  },
   testnet: false,
   // Custom fee configuration for pallet-revive's fixed fee model
   // Polkadot revive requires: gas × gasPrice ≥ ~22-25 billion wei total
@@ -89,11 +94,123 @@ export type ScaffoldConfig = {
   onlyLocalBurnerWallet: boolean;
 };
 
+/**
+ * Wallet Connection Provider Configuration
+ * Choose how users connect their wallets to your dApp
+ */
+export type WalletProvider = "appkit" | "rainbowkit" | "privy" | "web3auth" | "magic" | "dynamic" | "none";
+
+// Backwards compatibility
+export type EmbeddedWalletProvider = WalletProvider;
+
+export type EmbeddedWalletConfig = {
+  // Which provider to use
+  provider: WalletProvider;
+
+  // Provider-specific configuration (only the active provider's config is used)
+  appkit?: {
+    // Optional: Override WalletConnect project ID (uses walletConnectProjectId from scaffoldConfig if not provided)
+    projectId?: string;
+    // Features
+    features?: {
+      analytics?: boolean;
+      email?: boolean;
+      socials?: string[];
+      emailShowWallets?: boolean;
+    };
+    // Theme customization
+    // Note: themeMode auto-syncs with app theme by default. Set explicit value to override.
+    themeMode?: "dark" | "light";
+    themeVariables?: {
+      "--w3m-font-family"?: string;
+      "--w3m-accent"?: string;
+      "--w3m-color-mix"?: string;
+      "--w3m-color-mix-strength"?: number;
+      "--w3m-border-radius-master"?: string;
+    };
+    enableAnalytics?: boolean;
+  };
+
+  rainbowkit?: {
+    // Optional: Override WalletConnect project ID
+    projectId?: string;
+    // Modal size
+    modalSize?: "compact" | "wide";
+    // Show recent transactions in modal
+    showRecentTransactions?: boolean;
+    // Enable cool mode (confetti on connect)
+    coolMode?: boolean;
+    // Initial chain (defaults to first in targetNetworks)
+    initialChainId?: number;
+    // Note: Theme auto-syncs with app theme by default (no override available)
+  };
+
+  privy?: {
+    // Required: Privy app ID
+    appId: string;
+    // Login methods to enable
+    loginMethods?: Array<"email" | "sms" | "wallet" | "google" | "twitter" | "discord" | "github" | "apple">;
+    // Appearance customization
+    appearance?: {
+      // Note: theme auto-syncs with app theme by default. Set explicit value to override.
+      theme?: "light" | "dark";
+      accentColor?: string;
+      logo?: string;
+    };
+    // Embedded wallet settings
+    embeddedWallets?: {
+      createOnLogin?: "off" | "users-without-wallets" | "all-users";
+      requireUserPasswordOnCreate?: boolean;
+    };
+  };
+
+  web3auth?: {
+    // Required: Web3Auth client ID
+    clientId: string;
+    // Network (testnet vs production)
+    web3AuthNetwork?: "sapphire_mainnet" | "sapphire_devnet" | "mainnet" | "testnet" | "cyan";
+    // UI mode (static - set at initialization, does not auto-sync with app theme)
+    uiMode?: "dark" | "light";
+    // Login config
+    loginConfig?: Record<string, any>;
+  };
+
+  magic?: {
+    // Required: Magic API key
+    apiKey: string;
+    // Network configuration (auto-configured from targetNetworks, can override)
+    network?: {
+      rpcUrl?: string;
+      chainId?: number;
+    };
+  };
+
+  dynamic?: {
+    // Required: Dynamic environment ID
+    environmentId: string;
+    // Wallet connectors to enable
+    walletConnectors?: string[];
+    // Theme mode
+    // Note: theme auto-syncs with app theme by default. Set explicit value to override.
+    theme?: "light" | "dark" | "auto";
+    // App name/logo
+    appName?: string;
+    appLogoUrl?: string;
+  };
+
+  // Common configuration shared across embedded wallet providers (not used for appkit/rainbowkit)
+  common?: {
+    socialLogins?: Array<"google" | "apple" | "twitter" | "discord" | "github">;
+    emailLogin?: boolean;
+    smsLogin?: boolean;
+  };
+};
+
 export const DEFAULT_ALCHEMY_API_KEY = "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
 
 const scaffoldConfig = {
   // The networks on which your DApp is live
-  targetNetworks: [localNode],
+  targetNetworks: [passetHub],
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect if you only target the local network (default is 4000)
@@ -122,5 +239,171 @@ const scaffoldConfig = {
   // Only show the Burner Wallet when running on hardhat network
   onlyLocalBurnerWallet: true,
 } as const satisfies ScaffoldConfig;
+
+/**
+ * Wallet Connection Provider Configuration
+ *
+ * Choose how users connect their wallets to your dApp.
+ *
+ * **Traditional Wallet Connectors** (MetaMask, Coinbase, etc.):
+ * - "appkit": Reown AppKit (default) - WalletConnect v2 + custom connectors
+ * - "rainbowkit": RainbowKit - Popular wallet connection library
+ *
+ * **Embedded Wallets** (Email/Social Login):
+ * - "privy": https://privy.io - Best UX, supports custom chains
+ * - "web3auth": https://web3auth.io - MPC security, most flexible
+ * - "magic": https://magic.link - Simple passwordless email login
+ * - "dynamic": https://dynamic.xyz - Multi-chain social login
+ *
+ * - "none": No wallet connection UI
+ *
+ * To use embedded wallets:
+ * 1. Set provider (e.g., "privy")
+ * 2. Add provider's env variable to .env.local (see .env.example)
+ * 3. Restart dev server
+ */
+export const embeddedWalletConfig = {
+  // Provider selection (default: "appkit")
+  provider: "appkit" as WalletProvider,
+
+  // ============================================================================
+  // AppKit Configuration (Default provider - WalletConnect + custom connectors)
+  // ============================================================================
+  appkit: {
+    // Optional: Override project ID (uses scaffoldConfig.walletConnectProjectId by default)
+    // projectId: "your-custom-project-id",
+
+    // Features configuration
+    features: {
+      analytics: false, // Disable analytics
+      email: false, // Email/social disabled - not supported on custom chains
+      socials: [], // Social logins disabled - not supported on custom chains
+      emailShowWallets: true,
+    },
+
+    // Theme mode: Auto-syncs with app theme by default
+    // Uncomment to override with static theme:
+    // themeMode: "dark",
+
+    // Theme customization
+    themeVariables: {
+      "--w3m-font-family": "var(--font-unbounded), system-ui, sans-serif",
+      "--w3m-accent": "#2299dd", // Primary blue color
+      "--w3m-color-mix": "#2299dd",
+      "--w3m-color-mix-strength": 10,
+      "--w3m-border-radius-master": "8px",
+    },
+
+    enableAnalytics: false,
+  },
+
+  // ============================================================================
+  // RainbowKit Configuration
+  // ============================================================================
+  rainbowkit: {
+    // Optional: Override project ID (uses scaffoldConfig.walletConnectProjectId by default)
+    // projectId: "your-custom-project-id",
+
+    // Theme: Auto-syncs with app theme (no override option)
+
+    // Modal size
+    modalSize: "compact",
+
+    // Show recent transactions
+    showRecentTransactions: true,
+
+    // Cool mode (confetti on connect)
+    coolMode: false,
+
+    // Initial chain (defaults to first in targetNetworks if not specified)
+    // initialChainId: 1,
+  },
+
+  // ============================================================================
+  // Privy Configuration (Email/Social Login)
+  // ============================================================================
+  privy: {
+    // Required: Get your app ID at https://dashboard.privy.io
+    appId: process.env.NEXT_PUBLIC_PRIVY_APP_ID || "",
+
+    // Login methods to enable
+    loginMethods: ["email", "wallet", "google", "twitter"],
+
+    // Appearance customization
+    appearance: {
+      // Theme: Auto-syncs with app theme by default
+      // Uncomment to override with static theme:
+      // theme: "light",
+      accentColor: "#2299dd",
+      // logo: "https://your-logo-url.com/logo.png",
+    },
+
+    // Embedded wallet settings
+    embeddedWallets: {
+      createOnLogin: "users-without-wallets",
+      requireUserPasswordOnCreate: false,
+    },
+  },
+
+  // ============================================================================
+  // Web3Auth Configuration (MPC-based Social Login)
+  // ============================================================================
+  web3auth: {
+    // Required: Get your client ID at https://dashboard.web3auth.io
+    clientId: process.env.NEXT_PUBLIC_WEB3AUTH_CLIENT_ID || "",
+
+    // Network selection (use sapphire_devnet for testing, sapphire_mainnet for production)
+    web3AuthNetwork: "sapphire_devnet",
+
+    // UI mode: Static theme set at initialization (does not auto-sync with app theme)
+    // uiMode: "dark",
+
+    // Advanced: Custom login providers
+    // loginConfig: {},
+  },
+
+  // ============================================================================
+  // Magic Configuration (Passwordless Email Login)
+  // ============================================================================
+  magic: {
+    // Required: Get your API key at https://dashboard.magic.link
+    apiKey: process.env.NEXT_PUBLIC_MAGIC_API_KEY || "",
+
+    // Optional: Override network config (auto-configured from targetNetworks by default)
+    // network: {
+    //   rpcUrl: "https://your-custom-rpc.com",
+    //   chainId: 1,
+    // },
+  },
+
+  // ============================================================================
+  // Dynamic Configuration (Multi-chain Social Login)
+  // ============================================================================
+  dynamic: {
+    // Required: Get your environment ID at https://app.dynamic.xyz
+    environmentId: process.env.NEXT_PUBLIC_DYNAMIC_ENV_ID || "",
+
+    // Wallet connectors to enable
+    walletConnectors: ["email", "social"],
+
+    // Theme: Auto-syncs with app theme by default
+    // Uncomment to override with static theme or use 'auto' for system theme:
+    // theme: "dark",
+
+    // Optional: App branding
+    // appName: "My App",
+    // appLogoUrl: "https://your-logo-url.com/logo.png",
+  },
+
+  // ============================================================================
+  // Common Settings (Shared across embedded wallet providers)
+  // ============================================================================
+  // Note: Not used for AppKit/RainbowKit
+  common: {
+    socialLogins: ["google", "apple", "twitter"],
+    emailLogin: true,
+    smsLogin: false,
+  },
+} as const satisfies EmbeddedWalletConfig;
 
 export default scaffoldConfig;

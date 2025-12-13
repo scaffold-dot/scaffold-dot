@@ -2,6 +2,7 @@ export * from "./useAnimationConfig";
 export * from "./useContractLogs";
 export * from "./useCopyToClipboard";
 export * from "./useDeployedContractInfo";
+export * from "./useEmbeddedWallet";
 export * from "./useFetchBlocks";
 export * from "./useInitializeNativeCurrencyPrice";
 export * from "./useNetworkColor";

@@ -54,6 +54,10 @@ export const useTransactor = (_walletClient?: WalletClient): TransactionFunc => 
       const network = await walletClient.getChainId();
       const publicClient = getPublicClient(wagmiConfig);
 
+      if (!publicClient) {
+        throw new Error("Cannot connect to the network");
+      }
+
       notificationId = notification.loading(<TxnNotification message="Awaiting for user confirmation" />);
       if (typeof tx === "function") {
         const result = await tx();

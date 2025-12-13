@@ -12,6 +12,18 @@ const nextConfig: NextConfig = {
   webpack: config => {
     config.resolve.fallback = { fs: false, net: false, tls: false };
     config.externals.push("pino-pretty", "lokijs", "encoding");
+
+    // Ignore optional wallet connectors that we don't need
+    config.ignoreWarnings = [
+      { module: /@gemini-wallet\/core/ },
+      { module: /porto/ },
+    ];
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@gemini-wallet/core": false,
+      "porto": false,
+    };
+
     return config;
   },
 };

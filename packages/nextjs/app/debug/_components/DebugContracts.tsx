@@ -12,10 +12,12 @@ const selectedContractStorageKey = "scaffoldEth2.selectedContract";
 export function DebugContracts() {
   const contractsData = useAllContracts();
   const contractNames = useMemo(
-    () =>
-      Object.keys(contractsData).sort((a, b) => {
+    () => {
+      const names = Object.keys(contractsData);
+      return (names.length > 0 ? names : []).sort((a, b) => {
         return a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" });
-      }) as ContractName[],
+      }) as ContractName[];
+    },
     [contractsData],
   );
 
