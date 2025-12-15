@@ -17,11 +17,17 @@ const nextConfig: NextConfig = {
     config.ignoreWarnings = [
       { module: /@gemini-wallet\/core/ },
       { module: /porto/ },
+      { module: /@react-native-async-storage/ },
+      { module: /react-native/ },
     ];
     config.resolve.alias = {
       ...config.resolve.alias,
       "@gemini-wallet/core": false,
       "porto": false,
+      // Ignore React Native dependencies (used by MetaMask SDK but not needed in web)
+      "@react-native-async-storage/async-storage": false,
+      "react-native": false,
+      "react-native-randombytes": false,
     };
 
     return config;

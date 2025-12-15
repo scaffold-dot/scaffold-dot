@@ -65,11 +65,21 @@ export class Web3AuthProvider implements IEmbeddedWalletProvider {
       throw new Error("Web3Auth not initialized");
     }
 
-    const web3authProvider = await this.web3auth.connect();
+    try {
+      const web3authProvider = await this.web3auth.connect();
 
-    if (web3authProvider) {
-      const user = await this.getUserInfo();
-      this.notifyListeners(user);
+      if (web3authProvider) {
+        const user = await this.getUserInfo();
+        this.notifyListeners(user);
+      }
+    } catch (error: any) {
+      // User closed the modal - this is not an error, just ignore it
+      if (error?.message?.includes("User closed the modal")) {
+        console.log("User cancelled Web3Auth login");
+        return;
+      }
+      // Re-throw other errors
+      throw error;
     }
   }
 

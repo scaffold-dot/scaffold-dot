@@ -23,6 +23,7 @@ type AddressInfoDropdownProps = {
   blockExplorerAddressLink: string | undefined;
   displayName: string;
   ensAvatar?: string;
+  onDisconnect?: () => void;
 };
 
 export const AddressInfoDropdown = ({
@@ -30,8 +31,17 @@ export const AddressInfoDropdown = ({
   ensAvatar,
   displayName,
   blockExplorerAddressLink,
+  onDisconnect,
 }: AddressInfoDropdownProps) => {
   const { disconnect } = useDisconnect();
+
+  const handleDisconnect = () => {
+    if (onDisconnect) {
+      onDisconnect();
+    } else {
+      disconnect();
+    }
+  };
   const checkSumAddress = getAddress(address);
 
   const { copyToClipboard: copyAddressToClipboard, isCopiedToClipboard: isAddressCopiedToClipboard } =
@@ -112,7 +122,7 @@ export const AddressInfoDropdown = ({
             <button
               className="menu-item text-error h-8 btn-sm rounded-xl! flex gap-3 py-3"
               type="button"
-              onClick={() => disconnect()}
+              onClick={handleDisconnect}
             >
               <ArrowLeftOnRectangleIcon className="h-6 w-4 ml-2 sm:ml-0" /> <span>Disconnect</span>
             </button>

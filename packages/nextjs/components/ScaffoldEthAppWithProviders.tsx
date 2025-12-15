@@ -158,10 +158,16 @@ export const ScaffoldEthAppWithProviders = ({ children }: { children: React.Reac
   // Choose the correct wagmi config based on provider
   // RainbowKit needs its own config with RainbowKit connectors
   // Everything else uses AppKit's wagmi adapter
-  const wagmiConfig = provider === "rainbowkit" ? rainbowkitWagmiConfig : (wagmiAdapter.wagmiConfig as any);
+  // Use lazy initialization for RainbowKit to avoid SSR issues with indexedDB
+  const wagmiConfig = provider === "rainbowkit" ? (rainbowkitWagmiConfig || wagmiAdapter.wagmiConfig) : wagmiAdapter.wagmiConfig;
+
+  // Don't render until mounted on client to prevent hydration mismatch
+  if (!mounted) {
+    return null;
+  }
 
   return (
-    <WagmiProvider config={wagmiConfig}>
+    <WagmiProvider config={wagmiConfig as any}>
       <QueryClientProvider client={queryClient}>
         <ProviderReactWrapper>
           {isEmbeddedWalletProvider ? (

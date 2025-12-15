@@ -264,7 +264,7 @@ const scaffoldConfig = {
  */
 export const embeddedWalletConfig = {
   // Provider selection (default: "appkit")
-  provider: "appkit" as WalletProvider,
+  provider: "web3auth" as WalletProvider,
 
   // ============================================================================
   // AppKit Configuration (Default provider - WalletConnect + custom connectors)

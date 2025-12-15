@@ -5,3 +5,7 @@ export * from "./Faucet";
 export * from "./FaucetButton";
 export * from "./Input";
 export * from "./AppKitCustomConnectButton";
+export * from "./RainbowKitCustomConnectButton";
+export * from "./PrivyCustomConnectButton";
+export * from "./Web3AuthCustomConnectButton";
+export * from "./CustomConnectButton";
