@@ -36,7 +36,5 @@ export const CustomConnectButton = () => {
   }
 
   // AppKit provider (default)
-  // For other embedded wallet providers (magic, dynamic),
-  // we'll default to AppKit until custom buttons are implemented
   return <AppKitCustomConnectButton />;
 };

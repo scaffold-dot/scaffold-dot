@@ -45,14 +45,6 @@ export class EmbeddedWalletFactory {
         this.instance = await this.createWeb3AuthProvider(config);
         break;
 
-      case "magic":
-        this.instance = await this.createMagicProvider(config);
-        break;
-
-      case "dynamic":
-        this.instance = await this.createDynamicProvider(config);
-        break;
-
       default:
         throw new Error(`Unknown embedded wallet provider: ${providerType}`);
     }
@@ -121,46 +113,6 @@ export class EmbeddedWalletFactory {
     } catch (error) {
       throw new Error(
         `Failed to load Web3Auth provider. Make sure @web3auth/modal is installed: yarn add @web3auth/modal @web3auth/base @web3auth/ethereum-provider\n${error}`,
-      );
-    }
-  }
-
-  /**
-   * Create Magic provider instance
-   * Lazy loads the provider to avoid bundling if not used
-   */
-  private static async createMagicProvider(config: EmbeddedWalletConfig): Promise<IEmbeddedWalletProvider> {
-    if (!config.magic?.apiKey) {
-      throw new Error("Magic API key not configured. Add magic.apiKey to embeddedWalletConfig in scaffold.config.ts");
-    }
-
-    try {
-      // Dynamic import to avoid bundling if not used
-      const { MagicProvider } = await import("./providers/MagicProvider");
-      return new MagicProvider(config);
-    } catch (error) {
-      throw new Error(`Failed to load Magic provider. Make sure magic-sdk is installed: yarn add magic-sdk\n${error}`);
-    }
-  }
-
-  /**
-   * Create Dynamic provider instance
-   * Lazy loads the provider to avoid bundling if not used
-   */
-  private static async createDynamicProvider(config: EmbeddedWalletConfig): Promise<IEmbeddedWalletProvider> {
-    if (!config.dynamic?.environmentId) {
-      throw new Error(
-        "Dynamic environment ID not configured. Add dynamic.environmentId to embeddedWalletConfig in scaffold.config.ts",
-      );
-    }
-
-    try {
-      // Dynamic import to avoid bundling if not used
-      const { DynamicProvider } = await import("./providers/DynamicProvider");
-      return new DynamicProvider(config);
-    } catch (error) {
-      throw new Error(
-        `Failed to load Dynamic provider. Make sure @dynamic-labs/sdk-react-core is installed: yarn add @dynamic-labs/sdk-react-core\n${error}`,
       );
     }
   }

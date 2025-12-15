@@ -42,13 +42,13 @@ export const getAppKitModal = () => {
       })) as any,
       projectId: appkitConfig.projectId || walletConnectProjectId,
       metadata,
-      features: appkitConfig.features || {
+      features: (appkitConfig.features || {
         analytics: false,
         email: false,
         socials: [],
         emailShowWallets: true,
-      },
-      enableAnalytics: appkitConfig.enableAnalytics ?? false,
+      }) as any,
+      enableMobileFullScreen: appkitConfig.enableMobileFullScreen ?? false,
       themeMode: appkitConfig.themeMode || "dark",
       themeVariables: appkitConfig.themeVariables || {
         "--w3m-font-family": "var(--font-unbounded), system-ui, sans-serif",

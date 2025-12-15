@@ -13,6 +13,17 @@
 
 ![Debug Contracts tab](https://github.com/user-attachments/assets/a2d3f365-6294-461a-bd2b-3813b8fb413a)
 
+## Wallet Connection Options
+
+Scaffold-DOT supports multiple wallet connection strategies:
+
+- **Traditional Wallets**: MetaMask, Coinbase, WalletConnect, and 700+ other wallets via Reown AppKit (default) or RainbowKit
+- **Email Login**: Users connect with email (OTP verification) and get a non-custodial embedded wallet
+- **Social Login**: Google, X (Twitter), GitHub, Discord, Apple, Facebook, Farcaster authentication
+- **Embedded Wallet Providers**: Privy and Web3Auth for advanced use cases with MPC security
+
+Configure your preferred option in `packages/nextjs/scaffold.config.ts`. Email and social logins are enabled by default with AppKit.
+
 ## Requirements
 
 Before you begin, you need to install the following tools:

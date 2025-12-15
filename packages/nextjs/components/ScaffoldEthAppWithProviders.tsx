@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import { PrivyProvider as PrivyReactProvider } from "@privy-io/react-auth";
-import { DynamicContextProvider } from "@dynamic-labs/sdk-react-core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import { useTheme } from "next-themes";
@@ -111,34 +110,7 @@ const ProviderReactWrapper = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-  // Dynamic requires React context wrapper
-  if (provider === "dynamic") {
-    const dynamicConfig = embeddedWalletConfig.dynamic;
-
-    if (!dynamicConfig?.environmentId) {
-      console.warn("Dynamic provider selected but NEXT_PUBLIC_DYNAMIC_ENV_ID is not set");
-      return <>{children}</>;
-    }
-
-    // Use explicit theme from config if provided, otherwise sync with app theme
-    const dynamicTheme = dynamicConfig.theme ?? (isDarkMode ? "dark" : "light");
-
-    return (
-      <DynamicContextProvider
-        theme={dynamicTheme}
-        settings={{
-          environmentId: dynamicConfig.environmentId,
-          walletConnectors: dynamicConfig.walletConnectors || ["email", "social"],
-          ...(dynamicConfig.appName && { appName: dynamicConfig.appName }),
-          ...(dynamicConfig.appLogoUrl && { appLogoUrl: dynamicConfig.appLogoUrl }),
-        }}
-      >
-        {children}
-      </DynamicContextProvider>
-    );
-  }
-
-  // AppKit, Web3Auth, Magic, and None don't need React wrappers
+  // AppKit, Web3Auth, and None don't need React wrappers
   return <>{children}</>;
 };
 
@@ -153,7 +125,7 @@ export const ScaffoldEthAppWithProviders = ({ children }: { children: React.Reac
 
   const provider = embeddedWalletConfig.provider;
   // Only use EmbeddedWalletProvider for embedded wallet providers (not for appkit/rainbowkit/none)
-  const isEmbeddedWalletProvider = ["privy", "web3auth", "magic", "dynamic"].includes(provider);
+  const isEmbeddedWalletProvider = ["privy", "web3auth"].includes(provider);
 
   // Choose the correct wagmi config based on provider
   // RainbowKit needs its own config with RainbowKit connectors

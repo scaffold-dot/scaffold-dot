@@ -107,7 +107,7 @@ export type ScaffoldConfig = {
  * Wallet Connection Provider Configuration
  * Choose how users connect their wallets to your dApp
  */
-export type WalletProvider = "appkit" | "rainbowkit" | "privy" | "web3auth" | "magic" | "dynamic" | "none";
+export type WalletProvider = "appkit" | "rainbowkit" | "privy" | "web3auth" | "none";
 
 // Backwards compatibility
 export type EmbeddedWalletProvider = WalletProvider;
@@ -126,7 +126,12 @@ export type EmbeddedWalletConfig = {
       email?: boolean;
       socials?: string[];
       emailShowWallets?: boolean;
+      // Order of connection methods in modal: ['wallet', 'email', 'social']
+      // Put email/social first to avoid scrolling
+      connectMethodsOrder?: Array<"wallet" | "email" | "social">;
     };
+    // Enable fullscreen modal on mobile for better UX
+    enableMobileFullScreen?: boolean;
     // Theme customization
     // Note: themeMode auto-syncs with app theme by default. Set explicit value to override.
     themeMode?: "dark" | "light";
@@ -137,7 +142,6 @@ export type EmbeddedWalletConfig = {
       "--w3m-color-mix-strength"?: number;
       "--w3m-border-radius-master"?: string;
     };
-    enableAnalytics?: boolean;
   };
 
   rainbowkit?: {
@@ -182,29 +186,6 @@ export type EmbeddedWalletConfig = {
     uiMode?: "dark" | "light";
     // Login config
     loginConfig?: Record<string, any>;
-  };
-
-  magic?: {
-    // Required: Magic API key
-    apiKey: string;
-    // Network configuration (auto-configured from targetNetworks, can override)
-    network?: {
-      rpcUrl?: string;
-      chainId?: number;
-    };
-  };
-
-  dynamic?: {
-    // Required: Dynamic environment ID
-    environmentId: string;
-    // Wallet connectors to enable
-    walletConnectors?: string[];
-    // Theme mode
-    // Note: theme auto-syncs with app theme by default. Set explicit value to override.
-    theme?: "light" | "dark" | "auto";
-    // App name/logo
-    appName?: string;
-    appLogoUrl?: string;
   };
 
   // Common configuration shared across embedded wallet providers (not used for appkit/rainbowkit)
@@ -256,13 +237,13 @@ const scaffoldConfig = {
  *
  * **Traditional Wallet Connectors** (MetaMask, Coinbase, etc.):
  * - "appkit": Reown AppKit (default) - WalletConnect v2 + custom connectors
+ *   Also includes email + social login (Google, X, GitHub, Discord) with embedded wallets
+ *   Note: Email/social login may have limitations with custom chains - testing on Passet Hub
  * - "rainbowkit": RainbowKit - Popular wallet connection library
  *
  * **Embedded Wallets** (Email/Social Login):
  * - "privy": https://privy.io - Best UX, supports custom chains
  * - "web3auth": https://web3auth.io - MPC security, most flexible
- * - "magic": https://magic.link - Simple passwordless email login
- * - "dynamic": https://dynamic.xyz - Multi-chain social login
  *
  * - "none": No wallet connection UI
  *
@@ -271,9 +252,9 @@ const scaffoldConfig = {
  * 2. Add provider's env variable to .env.local (see .env.example)
  * 3. Restart dev server
  */
-export const embeddedWalletConfig = {
+export const embeddedWalletConfig: EmbeddedWalletConfig = {
   // Provider selection (default: "appkit")
-  provider: "web3auth" as WalletProvider,
+  provider: "appkit" as WalletProvider,
 
   // ============================================================================
   // AppKit Configuration (Default provider - WalletConnect + custom connectors)
@@ -285,10 +266,14 @@ export const embeddedWalletConfig = {
     // Features configuration
     features: {
       analytics: false, // Disable analytics
-      email: false, // Email/social disabled - not supported on custom chains
-      socials: [], // Social logins disabled - not supported on custom chains
-      emailShowWallets: true,
+      email: true, // Enable email login (OTP-based, non-custodial wallet)
+      socials: ["google", "x", "github", "discord"], // Social login providers
+      emailShowWallets: true, // Show wallet options alongside email/social
+      connectMethodsOrder: ["email", "social", "wallet"], // Show email/social first (no scrolling needed)
     },
+
+    // Enable fullscreen modal on mobile for better UX
+    enableMobileFullScreen: true,
 
     // Theme mode: Auto-syncs with app theme by default
     // Uncomment to override with static theme:
@@ -302,8 +287,6 @@ export const embeddedWalletConfig = {
       "--w3m-color-mix-strength": 10,
       "--w3m-border-radius-master": "8px",
     },
-
-    enableAnalytics: false,
   },
 
   // ============================================================================
@@ -369,39 +352,6 @@ export const embeddedWalletConfig = {
 
     // Advanced: Custom login providers
     // loginConfig: {},
-  },
-
-  // ============================================================================
-  // Magic Configuration (Passwordless Email Login)
-  // ============================================================================
-  magic: {
-    // Required: Get your API key at https://dashboard.magic.link
-    apiKey: process.env.NEXT_PUBLIC_MAGIC_API_KEY || "",
-
-    // Optional: Override network config (auto-configured from targetNetworks by default)
-    // network: {
-    //   rpcUrl: "https://your-custom-rpc.com",
-    //   chainId: 1,
-    // },
-  },
-
-  // ============================================================================
-  // Dynamic Configuration (Multi-chain Social Login)
-  // ============================================================================
-  dynamic: {
-    // Required: Get your environment ID at https://app.dynamic.xyz
-    environmentId: process.env.NEXT_PUBLIC_DYNAMIC_ENV_ID || "",
-
-    // Wallet connectors to enable
-    walletConnectors: ["email", "social"],
-
-    // Theme: Auto-syncs with app theme by default
-    // Uncomment to override with static theme or use 'auto' for system theme:
-    // theme: "dark",
-
-    // Optional: App branding
-    // appName: "My App",
-    // appLogoUrl: "https://your-logo-url.com/logo.png",
   },
 
   // ============================================================================
