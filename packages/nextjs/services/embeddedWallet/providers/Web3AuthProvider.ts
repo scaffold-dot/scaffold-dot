@@ -17,6 +17,7 @@ export class Web3AuthProvider implements IEmbeddedWalletProvider {
   private web3auth: Web3Auth | null = null;
   private listeners: Array<(user: EmbeddedWalletUser | null) => void> = [];
   private isInitializing = true;
+  private cachedAddress: Address | null = null;
 
   constructor(private config: EmbeddedWalletConfig) {
     if (!config.web3auth?.clientId) {
@@ -56,7 +57,9 @@ export class Web3AuthProvider implements IEmbeddedWalletProvider {
 
     // Check if already connected
     if (this.web3auth.connected) {
-      this.notifyListeners(await this.getUserInfo());
+      const userInfo = await this.getUserInfo();
+      this.cachedAddress = userInfo?.walletAddress ?? null;
+      this.notifyListeners(userInfo);
     }
   }
 
@@ -70,6 +73,7 @@ export class Web3AuthProvider implements IEmbeddedWalletProvider {
 
       if (web3authProvider) {
         const user = await this.getUserInfo();
+        this.cachedAddress = user?.walletAddress ?? null;
         this.notifyListeners(user);
       }
     } catch (error: any) {
@@ -89,6 +93,7 @@ export class Web3AuthProvider implements IEmbeddedWalletProvider {
     }
 
     await this.web3auth.logout();
+    this.cachedAddress = null;
     this.notifyListeners(null);
   }
 
@@ -103,17 +108,11 @@ export class Web3AuthProvider implements IEmbeddedWalletProvider {
   }
 
   getAddress(): Address | null {
-    if (!this.web3auth?.connected || !this.web3auth.provider) {
-      return null;
-    }
-
-    // Get address from provider
-    // This is a simplified version - in practice, you'd get this from the provider
-    return null;
+    return this.cachedAddress;
   }
 
   isAuthenticated(): boolean {
-    return this.web3auth?.connected ?? false;
+    return (this.web3auth?.connected && this.cachedAddress !== null) ?? false;
   }
 
   isLoading(): boolean {

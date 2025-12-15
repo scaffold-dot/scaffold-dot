@@ -52,6 +52,15 @@ export const passetHub = defineChain({
     },
   },
   testnet: true,
+  // Custom fee configuration for pallet-revive's fixed fee model
+  fees: {
+    estimateFeesPerGas: async () => {
+      return {
+        maxFeePerGas: 25000000n, // 25M per gas unit = 25B total with 1M gas limit
+        maxPriorityFeePerGas: 1000000n, // 1M tip
+      };
+    },
+  },
 });
 
 
