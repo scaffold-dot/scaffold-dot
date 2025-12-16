@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { hardhat } from "viem/chains";
 import { localNode } from "../scaffold.config"
 import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
-import { CustomConnectButton, FaucetButton } from "~~/components/scaffold-eth";
+import { CustomConnectButton, FaucetButton, FaucetLink } from "~~/components/scaffold-eth";
 import { useOutsideClick, useTargetNetwork } from "~~/hooks/scaffold-eth";
 
 type HeaderMenuLink = {
@@ -96,8 +96,9 @@ export const Header = () => {
         </ul>
       </div>
       <div className="navbar-end grow mr-4">
-        <CustomConnectButton />
         {isLocalNetwork && <FaucetButton />}
+        <FaucetLink />
+        <CustomConnectButton />
       </div>
     </div>
   );
