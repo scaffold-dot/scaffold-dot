@@ -1,10 +1,11 @@
 "use client";
 
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
+import { rainbowkitBurnerWallet } from "burner-connector";
 import scaffoldConfig from "~~/scaffold.config";
 import { metadata, walletConnectProjectId } from "./wagmiConnectors";
 
-const { targetNetworks } = scaffoldConfig;
+const { targetNetworks, onlyLocalBurnerWallet } = scaffoldConfig;
 
 let cachedConfig: any = null;
 
@@ -21,11 +22,20 @@ export const getRainbowkitWagmiConfig = () => {
   }
 
   if (!cachedConfig) {
+    // Determine if we should show burner wallet
+    const showBurner = !onlyLocalBurnerWallet || targetNetworks.some((network: any) => network.id === 31337 || network.id === 420420420);
+
     cachedConfig = getDefaultConfig({
       appName: metadata.name,
       projectId: walletConnectProjectId,
       chains: targetNetworks as any,
       ssr: true,
+      wallets: showBurner ? [
+        {
+          groupName: "Recommended",
+          wallets: [rainbowkitBurnerWallet],
+        },
+      ] : undefined,
     });
   }
 

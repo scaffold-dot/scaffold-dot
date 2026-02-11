@@ -200,7 +200,7 @@ export const DEFAULT_ALCHEMY_API_KEY = "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
 
 const scaffoldConfig = {
   // The networks on which your DApp is live
-  targetNetworks: [passetHub],
+  targetNetworks: [localNode],
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect if you only target the local network (default is 4000)
@@ -254,7 +254,7 @@ const scaffoldConfig = {
  */
 export const embeddedWalletConfig: EmbeddedWalletConfig = {
   // Provider selection (default: "appkit")
-  provider: "appkit" as WalletProvider,
+  provider: "rainbowkit" as WalletProvider,
 
   // ============================================================================
   // AppKit Configuration (Default provider - WalletConnect + custom connectors)
