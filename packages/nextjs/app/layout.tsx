@@ -2,7 +2,7 @@ import { ScaffoldEthAppWithProviders } from "~~/components/ScaffoldEthAppWithPro
 import { ThemeProvider } from "~~/components/ThemeProvider";
 import "~~/styles/globals.css";
 import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
-import { Unbounded } from "next/font/google";
+import { Inter } from "next/font/google";
 import Script from "next/script";
 
 export const metadata = getMetadata({
@@ -10,10 +10,10 @@ export const metadata = getMetadata({
   description: "Built with 🏗 Scaffold-DOT",
 });
 
-const unbounded = Unbounded({
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-unbounded',
+  variable: '--font-inter',
   weight: [
     '200',
     '300',
@@ -28,7 +28,7 @@ const unbounded = Unbounded({
 
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html suppressHydrationWarning className={unbounded.className}>
+    <html suppressHydrationWarning className={inter.className}>
       <body>
         <ThemeProvider enableSystem>
           <ScaffoldEthAppWithProviders>{children}</ScaffoldEthAppWithProviders>

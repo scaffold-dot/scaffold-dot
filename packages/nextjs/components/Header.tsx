@@ -41,8 +41,8 @@ export const HeaderMenuLinks = () => {
               href={href}
               passHref
               className={`${
-                isActive ? "bg-primary" : ""
-              } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+                isActive ? "bg-primary text-primary-content" : "hover:bg-base-300 hover:shadow-md focus:bg-base-300"
+              } active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
             >
               {icon}
               <span>{label}</span>
@@ -88,7 +88,7 @@ export const Header = () => {
           </div>
           <div className="flex flex-col">
             <span className="font-bold leading-tight">Scaffold-DOT</span>
-            <span className="text-xs">Polkadot Hub dev stack</span>
+            <span className="text-xs">AssetHub dev stack</span>
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">

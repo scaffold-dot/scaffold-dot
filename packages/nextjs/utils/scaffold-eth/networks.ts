@@ -47,7 +47,7 @@ export const NETWORKS_EXTRA_DATA: Record<string, ChainAttributes> = {
     color: "#b8af0c",
   },
   [chains.mainnet.id]: {
-    color: "#ff8b9e",
+    color: "#4a4a4a",
   },
   [chains.sepolia.id]: {
     color: ["#5f4bb6", "#87ff65"],
@@ -92,7 +92,7 @@ export const NETWORKS_EXTRA_DATA: Record<string, ChainAttributes> = {
   },
   // Westend Asset Hub
   [420420421]: {
-    color: "#E6007A", // Polkadot pink
+    color: "#4a4a4a", // Neutral gray
   },
 };
 

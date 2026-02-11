@@ -281,9 +281,9 @@ export const embeddedWalletConfig: EmbeddedWalletConfig = {
 
     // Theme customization
     themeVariables: {
-      "--w3m-font-family": "var(--font-unbounded), system-ui, sans-serif",
-      "--w3m-accent": "#2299dd", // Primary blue color
-      "--w3m-color-mix": "#2299dd",
+      "--w3m-font-family": "var(--font-inter), system-ui, sans-serif",
+      "--w3m-accent": "#1a1a1a", // Primary neutral color
+      "--w3m-color-mix": "#1a1a1a",
       "--w3m-color-mix-strength": 10,
       "--w3m-border-radius-master": "8px",
     },
@@ -326,7 +326,7 @@ export const embeddedWalletConfig: EmbeddedWalletConfig = {
       // Theme: Auto-syncs with app theme by default
       // Uncomment to override with static theme:
       // theme: "light",
-      accentColor: "#2299dd",
+      accentColor: "#1a1a1a",
       // logo: "https://your-logo-url.com/logo.png",
     },
 
