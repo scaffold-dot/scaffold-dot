@@ -49,8 +49,11 @@
     "polkadot:rpc": "yarn workspace @se-2/polkadot-sdk rpc",
     "postinstall": "yarn setup:husky && yarn setup:binaries",
     "precommit": "lint-staged",
+    "hub": "concurrently \"yarn chain\" \"yarn rpc:wait\" \"yarn start:wait\" --names \"⛓️ ,🔌,⚡\" --kill-others-on-fail --prefix-colors \"cyan,magenta,green\"",
     "rpc": "RUST_LOG=\"info,eth-rpc=debug\" ./packages/asset-hub-pvm/bin/eth-rpc --dev",
+    "rpc:wait": "wait-on tcp:9944 -t 30000 && yarn rpc",
     "start": "yarn workspace @se-2/nextjs dev",
+    "start:wait": "wait-on tcp:8545 -t 60000 && yarn start",
     "setup:binaries": "yarn node setup-binaries.js",
     "setup:husky": "yarn husky install",
     "test": "yarn hardhat:test",
@@ -62,8 +65,10 @@
   },
   "packageManager": "yarn@3.2.3",
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "husky": "^9.1.6",
-    "lint-staged": "^15.2.10"
+    "lint-staged": "^15.2.10",
+    "wait-on": "^7.2.0"
   },
   "engines": {
     "node": ">=20.18.3"
