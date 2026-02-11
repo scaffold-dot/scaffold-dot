@@ -60,17 +60,29 @@ module.exports = {
       url: `http://127.0.0.1:8545`,
       accounts: ["0x5fb92d6e98884f76de468fa3f6278f8807c48bebc13595d45af5bdc4da702133"],
     },
+    paseoAssetHub: {
+      polkavm: true,
+      url: 'https://eth-rpc-testnet.polkadot.io',
+      accounts: [deployerPrivateKey],
+      chainId: 420420417,
+    },
+    polkadotAssetHub: {
+      polkavm: true,
+      url: 'https://eth-rpc.polkadot.io',
+      accounts: [deployerPrivateKey],
+      chainId: 420420419,
+    },
+    kusamaHub: {
+      polkavm: true,
+      url: 'https://eth-rpc-kusama.polkadot.io',
+      accounts: [deployerPrivateKey],
+      chainId: 420420418,
+    },
     passetHub: {
       polkavm: true,
       url: 'https://testnet-passet-hub-eth-rpc.polkadot.io',
       accounts: [deployerPrivateKey],
       chainId: 420420422,
-    },
-    kusamaHub: {
-      polkavm: true,
-      url: 'https://kusama-asset-hub-eth-rpc.polkadot.io',
-      accounts: [deployerPrivateKey],
-      chainId: 420420418,
     },
   },
 };

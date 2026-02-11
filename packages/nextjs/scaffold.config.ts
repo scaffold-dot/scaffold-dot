@@ -15,8 +15,8 @@ export const localNode = defineChain({
   },
   blockExplorers: {
     default: {
-      name: "Blockscout",
-      url: "https://blockscout.com",
+      name: "Local Block Explorer",
+      url: "http://localhost:8545/blockexplorer",
     },
   },
   testnet: false,
@@ -33,9 +33,98 @@ export const localNode = defineChain({
   },
 });
 
+// Define Paseo Asset Hub chain, not included in viem/chains
+export const paseoAssetHub = defineChain({
+  id: 420420417,
+  name: "Polkadot Hub Testnet",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Paseo DOT",
+    symbol: "PAS",
+  },
+  rpcUrls: {
+    default: { http: ["https://eth-rpc-testnet.polkadot.io"] },
+  },
+  blockExplorers: {
+    default: {
+      name: "Blockscout",
+      url: "https://blockscout-testnet.polkadot.io",
+    },
+  },
+  testnet: true,
+  // Custom fee configuration for pallet-revive's fixed fee model
+  fees: {
+    estimateFeesPerGas: async () => {
+      return {
+        maxFeePerGas: 25000000n, // 25M per gas unit = 25B total with 1M gas limit
+        maxPriorityFeePerGas: 1000000n, // 1M tip
+      };
+    },
+  },
+});
+
+// Define Polkadot Asset Hub chain, not included in viem/chains
+export const assetHub = defineChain({
+  id: 420420419,
+  name: "Polkadot Hub",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Polkadot DOT",
+    symbol: "DOT",
+  },
+  rpcUrls: {
+    default: { http: ["https://eth-rpc.polkadot.io"] },
+  },
+  blockExplorers: {
+    default: {
+      name: "Blockscout",
+      url: "https://blockscout.polkadot.io",
+    },
+  },
+  testnet: false,
+  // Custom fee configuration for pallet-revive's fixed fee model
+  fees: {
+    estimateFeesPerGas: async () => {
+      return {
+        maxFeePerGas: 25000000n, // 25M per gas unit = 25B total with 1M gas limit
+        maxPriorityFeePerGas: 1000000n, // 1M tip
+      };
+    },
+  },
+});
+
+// Define Kusama Asset Hub chain, not included in viem/chains
+export const kusamaAssetHub = defineChain({
+  id: 420420418,
+  name: "Kusama Hub Testnet",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Kusama KSM",
+    symbol: "KSM",
+  },
+  rpcUrls: {
+    default: { http: ["https://eth-rpc-kusama.polkadot.io"] },
+  },
+  blockExplorers: {
+    default: {
+      name: "Blockscout",
+      url: "https://blockscout-kusama.polkadot.io",
+    },
+  },
+  testnet: false,
+  // Custom fee configuration for pallet-revive's fixed fee model
+  fees: {
+    estimateFeesPerGas: async () => {
+      return {
+        maxFeePerGas: 25000000n, // 25M per gas unit = 25B total with 1M gas limit
+        maxPriorityFeePerGas: 1000000n, // 1M tip
+      };
+    },
+  },
+});
+
 // Define Paseo Passet Hub chain, not included in viem/chains
-export const passetHub = defineChain({
-  id: 420420422,
+export const passetHub = defineChain({ id: 420420422,
   name: "Passet Hub",
   nativeCurrency: {
     decimals: 18,
@@ -61,28 +150,6 @@ export const passetHub = defineChain({
       };
     },
   },
-});
-
-
-// Define Kusama Hub chain, not included in viem/chains
-export const kusamaHub = defineChain({
-  id: 420420418,
-  name: "Kusama Hub",
-  nativeCurrency: {
-    decimals: 18,
-    name: "Kusama",
-    symbol: "KSM",
-  },
-  rpcUrls: {
-    default: { http: ["https://kusama-asset-hub-eth-rpc.polkadot.io"] },
-  },
-  blockExplorers: {
-    default: {
-      name: "Blockscout",
-      url: "https://blockscout-kusama-asset-hub.parity-chains-scw.parity.io/",
-    },
-  },
-  testnet: false,
 });
 
 // Custom gas configuration for localNode
