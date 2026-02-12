@@ -118,9 +118,9 @@ Visit the [What's next section of our docs](https://docs.scaffoldeth.io/quick-st
 
 ## Documentation
 
-Visit the Scaffold-ETH 2 [docs](https://docs.scaffoldeth.io) to learn all the technical details and guides for working with Scaffold-DOT.
+Visit the official Scaffold-DOT [documentation](https://docs.scaffolddot.dev/) to learn all the technical details and guides.
 
-To know more about its features, check out their [website](https://scaffoldeth.io).
+For additional resources, you can also refer to the Scaffold-ETH 2 [docs](https://docs.scaffoldeth.io) and [website](https://scaffoldeth.io).
 
 ## Contributing to Scaffold-DOT
 
