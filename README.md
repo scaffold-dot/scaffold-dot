@@ -11,18 +11,6 @@
 - 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
 - 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
 
-![Debug Contracts tab](https://github.com/user-attachments/assets/a2d3f365-6294-461a-bd2b-3813b8fb413a)
-
-## Wallet Connection Options
-
-Scaffold-DOT supports multiple wallet connection strategies:
-
-- **Traditional Wallets**: MetaMask, Coinbase, WalletConnect, and 700+ other wallets via Reown AppKit (default) or RainbowKit
-- **Email Login**: Users connect with email (OTP verification) and get a non-custodial embedded wallet
-- **Social Login**: Google, X (Twitter), GitHub, Discord, Apple, Facebook, Farcaster authentication
-- **Embedded Wallet Providers**: Privy and Web3Auth for advanced use cases with MPC security
-
-Configure your preferred option in `packages/nextjs/scaffold.config.ts`. Email and social logins are enabled by default with AppKit.
 
 ## Requirements
 
@@ -32,12 +20,8 @@ Before you begin, you need to install the following tools:
 - Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
 - [Git](https://git-scm.com/downloads)
 
-- [Rust](https://www.rust-lang.org/)
-- [Polkadot-SDK](https://docs.polkadot.com/develop/parachains/install-polkadot-sdk/)
 
 ## Quickstart
-
-To get started with Scaffold-DOT, follow the steps below:
 
 1. Install the latest version of Scaffold-DOT.
 
@@ -50,71 +34,20 @@ cd into scaffold-dot directory and yarn install
 cd scaffold-dot && yarn install
 ```
 
-This step will set up your monorepo and download the correct prebuilt asset hub binaries for your system. Windows OS not supported.
-
-
-2. On a terminal, start the substrate node:
+2. On a terminal, start all of the services:
 
 ```
-yarn chain
+yarn hub
 ```
 
-3. On a second terminal, start the eth-rpc server:
-
-```
-yarn rpc
-```
-
-4. On a third terminal, deploy the test contract:
+3. On a second terminal, deploy your smart contract:
 
 ```
 yarn deploy
 ```
 
-This command deploys a test smart contract to the local chain.
-
-
-5. On a fourth terminal, start your NextJS app:
-
-```
-yarn start
-```
-
 Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
 
-
-**Deployment to a public testnet or AssetHub**
-
-6. Generate a deployment private key by running `yarn generate`, and follow the prompts. `yarn account` will print account details to the terminal. Fund your account with the [Polkadot faucet](https://faucet.polkadot.io/?parachain=1111) or send the deployment account somd funds from AssetHub.
-
-Scaffold-DOT will generate an encrypted private key. This is the most secure way to generate and store your private key.
-
-You'll need to change two configuration files.
-
-### hardhat.config.ts
-
-Update the `defaultNetwork` to the network you want to deploy to.
-
-### scaffold-config.ts
-
-Update `targetNetworks` to include the networks that your frontend will support.
-
-Fund your account with a faucet, run yarn deploy, type your password, and your contract deployment confirmation will print in the console.
-
-Run your frontend server, and connect with your browser wallet. You are now able to interact with your smart contract.
-
-**What's next**:
-
-Scaffold-DOT is a fork of scaffold-ETH2. For now, you can follow their docs below.
-
-Visit the [What's next section of our docs](https://docs.scaffoldeth.io/quick-start/environment#whats-next) to learn how to:
-
-- Edit your smart contracts
-- Edit your deployment scripts
-- Customize your frontend
-- Edit the app config
-- Writing and running tests
-- [Setting up external services and API keys](https://docs.scaffoldeth.io/deploying/deploy-smart-contracts#configuration-of-third-party-services-for-production-grade-apps)
 
 ## Documentation
 
