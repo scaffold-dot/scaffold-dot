@@ -19,7 +19,8 @@
     "lint": "eslint",
     "lint-staged": "eslint",
     "test": "yarn hardhat test --network hardhat",
-    "verify": "hardhat etherscan-verify"
+    "verify": "hardhat etherscan-verify",
+    "compiler": "ts-node scripts/setCompiler.ts"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "2.0.8",

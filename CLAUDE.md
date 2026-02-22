@@ -33,7 +33,7 @@ yarn start    # Terminal 4: Start NextJS frontend on http://localhost:3000
 - Uses Hardhat Ignition for deployments (not hardhat-deploy)
 - Deployment modules in `packages/hardhat/ignition/modules/`
 - Default deployment script: `packages/hardhat/scripts/runHardhatDeployWithPK.ts`
-- Uses PolkaVM-specific compiler (resolc) configured in hardhat.config.ts
+- Dual compiler support: solc (default, EVM) or resolc (PolkaVM) — switch with `yarn compiler`
 
 ### Testing & Build Commands
 ```bash
@@ -79,10 +79,34 @@ yarn fund              # Fund account on testnet
 - Deployment runs `generateTsAbis.ts` automatically to update frontend contract types
 - Generated ABIs: `packages/nextjs/contracts/deployedContracts.ts`
 
+### Compiler Selection
+
+Scaffold-DOT supports two Solidity compilers for Polkadot Hub's dual-VM architecture:
+
+- **solc** (default) — Standard EVM compiler. Produces EVM bytecode that runs on Polkadot Hub's REVM. Recommended by Parity for Phase 1 (full tooling, contract verification, production stability).
+- **resolc** — PolkaVM compiler. Compiles Solidity → Yul IR → LLVM → RISC-V bytecode for PolkaVM execution.
+
+Both target the same chain and address space — the chain routes execution to the correct VM based on deployed bytecode.
+
+```bash
+yarn compiler solc      # Switch to standard EVM compiler (default)
+yarn compiler resolc    # Switch to PolkaVM compiler
+yarn compiler           # Interactive prompt
+```
+
+What changes under the hood when switching:
+- `compiler.config.json` stores the current selection (`"solc"` or `"resolc"`)
+- `hardhat.config.ts` conditionally loads `@parity/hardhat-polkadot` plugin (only for resolc)
+- Network configs conditionally include `polkavm: true` flag (only for resolc)
+- `resolc` config block only present when using resolc
+- `generateTsAbis.ts` reads from `artifacts/` (solc) or `artifacts-pvm/` (resolc)
+- Stale artifacts are cleaned automatically when switching
+
 ### Hardhat Configuration Specifics
 - Solidity version: 0.8.28
-- PolkaVM compiler (resolc) with npm source
-- All networks require `polkavm: true` flag
+- Compiler selection stored in `packages/hardhat/compiler.config.json`
+- When resolc: PolkaVM compiler with npm source, `polkavm: true` on all networks
+- When solc: Standard Hardhat compilation, no PolkaVM plugin loaded
 - Local account for testing: `0x70997970C51812dc3A010C7d01b50e0d17dc79C8`
 
 ## Frontend Architecture

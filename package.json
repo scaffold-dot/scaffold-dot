@@ -14,6 +14,7 @@
     "account:generate": "yarn workspace @se-2/hardhat account:generate",
     "account:reveal-pk": "yarn workspace @se-2/hardhat account:reveal-pk",
     "chain": "RUST_LOG=\"error,evm=debug,sc_rpc_server=info,runtime::revive=debug\" ./packages/asset-hub-pvm/bin/revive-dev-node --dev",
+    "compiler": "yarn workspace @se-2/hardhat compiler",
     "compile": "yarn hardhat:compile",
     "deploy": "yarn hardhat:deploy",
     "fork": "yarn hardhat:fork",

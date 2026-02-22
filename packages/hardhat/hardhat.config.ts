@@ -1,7 +1,21 @@
+const fs = require('fs');
+const path = require('path');
+
+const compilerConfig = JSON.parse(
+  fs.readFileSync(path.join(__dirname, 'compiler.config.json'), 'utf-8')
+);
+const useResolc = compilerConfig.compiler === 'resolc';
+
 require('dotenv').config();
 require('@nomicfoundation/hardhat-toolbox');
-require('@parity/hardhat-polkadot');
-//require('hardhat-deploy');
+
+// Only load the Parity plugin when using resolc — it overrides compile, test,
+// run, and node tasks to route through PolkaVM. For solc mode, standard
+// Hardhat tasks produce EVM bytecode that Polkadot Hub's REVM accepts directly.
+if (useResolc) {
+  require('@parity/hardhat-polkadot');
+}
+
 require('@nomicfoundation/hardhat-ignition-ethers')
 
 //import "hardhat-deploy-ethers";
@@ -32,17 +46,19 @@ task("deploy").setAction(async (args, hre, runSuper) => {
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: '0.8.28',
-  // npm Compiler
-  resolc: {
-    compilerSource: 'npm',
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 200,
+  // resolc config — only included when using the PolkaVM compiler
+  ...(useResolc ? {
+    resolc: {
+      compilerSource: 'npm',
+      settings: {
+        optimizer: {
+          enabled: true,
+          runs: 200,
+        },
       },
     },
-  },
-  
+  } : {}),
+
   // use "localhost" to deploy to local node that will connect from nextjs frontend
   // use "passetHub" to deploy to Paseo Asset Hub test network
   defaultNetwork: "localNode",
@@ -56,30 +72,30 @@ module.exports = {
       chainId: 31337,
     },
     localNode: {
-      polkavm: true,
+      ...(useResolc ? { polkavm: true } : {}),
       url: `http://127.0.0.1:8545`,
       accounts: ["0x5fb92d6e98884f76de468fa3f6278f8807c48bebc13595d45af5bdc4da702133"],
     },
     paseoAssetHub: {
-      polkavm: true,
+      ...(useResolc ? { polkavm: true } : {}),
       url: 'https://eth-rpc-testnet.polkadot.io',
       accounts: [deployerPrivateKey],
       chainId: 420420417,
     },
     polkadotAssetHub: {
-      polkavm: true,
+      ...(useResolc ? { polkavm: true } : {}),
       url: 'https://eth-rpc.polkadot.io',
       accounts: [deployerPrivateKey],
       chainId: 420420419,
     },
     kusamaHub: {
-      polkavm: true,
+      ...(useResolc ? { polkavm: true } : {}),
       url: 'https://eth-rpc-kusama.polkadot.io',
       accounts: [deployerPrivateKey],
       chainId: 420420418,
     },
     passetHub: {
-      polkavm: true,
+      ...(useResolc ? { polkavm: true } : {}),
       url: 'https://testnet-passet-hub-eth-rpc.polkadot.io',
       accounts: [deployerPrivateKey],
       chainId: 420420422,

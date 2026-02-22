@@ -7,6 +7,7 @@
  */
 
 import * as fs from "fs";
+import * as path from "path";
 import prettier from "prettier";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 
@@ -17,8 +18,12 @@ const generatedContractComment = `
  */
 `;
 
+const compilerConfig = JSON.parse(
+  fs.readFileSync(path.join(__dirname, '../compiler.config.json'), 'utf-8')
+);
+
 const DEPLOYMENTS_DIR = "./deployments";
-const ARTIFACTS_DIR = "./artifacts-pvm";
+const ARTIFACTS_DIR = compilerConfig.compiler === 'resolc' ? './artifacts-pvm' : './artifacts';
 
 function getDirectories(path: string) {
   return fs
