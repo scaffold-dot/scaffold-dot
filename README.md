@@ -34,6 +34,8 @@ cd into scaffold-dot directory and yarn install
 cd scaffold-dot && yarn install
 ```
 
+> This runs `setup-binaries.js` which downloads the platform-specific binaries (`revive-dev-node`, `eth-rpc`) needed to run Polkadot Hub locally.
+
 2. On a terminal, start all of the services:
 
 ```
