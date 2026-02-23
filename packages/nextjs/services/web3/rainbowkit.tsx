@@ -33,7 +33,7 @@ export const getRainbowkitWagmiConfig = () => {
       wallets: showBurner ? [
         {
           groupName: "Recommended",
-          wallets: [rainbowkitBurnerWallet],
+          wallets: [rainbowkitBurnerWallet as any],
         },
       ] : undefined,
     });

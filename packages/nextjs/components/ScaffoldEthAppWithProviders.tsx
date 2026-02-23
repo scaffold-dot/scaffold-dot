@@ -97,7 +97,7 @@ const ProviderReactWrapper = ({ children }: { children: React.ReactNode }) => {
           loginMethods: privyConfig.loginMethods || ["email", "wallet"],
           appearance: {
             theme: privyTheme,
-            accentColor: privyConfig.appearance?.accentColor || "#2299dd",
+            accentColor: (privyConfig.appearance?.accentColor || "#2299dd") as `#${string}`,
             ...(privyConfig.appearance?.logo && { logo: privyConfig.appearance.logo }),
           },
           embeddedWallets: privyConfig.embeddedWallets || {

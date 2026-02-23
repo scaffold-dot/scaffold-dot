@@ -54,21 +54,20 @@ export const Footer = () => {
             <span>·</span>
             <div className="flex justify-center items-center gap-2">
               <p className="m-0 text-center">
-                Built with <HeartIcon className="inline-block h-4 w-4" /> at
+                Built with <HeartIcon className="inline-block h-4 w-4" /> for
               </p>
               <a
                 className="flex justify-center items-center gap-1"
-                href="https://buidlguidl.com/"
+                href="https://polkadot.com/"
                 target="_blank"
                 rel="noreferrer"
               >
-                <BuidlGuidlLogo className="w-3 h-5 pb-1" />
-                <span className="link">BuidlGuidl</span>
+                <span className="link">PolkadotHub</span>
               </a>
             </div>
             <span>·</span>
             <div className="text-center">
-              <a href="https://github.com/scaffold-dot/scaffold-dot" target="_blank" rel="noreferrer" className="link">
+              <a href="https://docs.scaffolddot.dev" target="_blank" rel="noreferrer" className="link">
                 Support
               </a>
             </div>

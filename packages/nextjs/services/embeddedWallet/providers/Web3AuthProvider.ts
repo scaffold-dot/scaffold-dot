@@ -43,7 +43,7 @@ export class Web3AuthProvider implements IEmbeddedWalletProvider {
 
     this.web3auth = new Web3Auth({
       clientId: web3authConfig.clientId,
-      web3AuthNetwork: (web3authConfig.web3AuthNetwork || "sapphire_devnet") as WEB3AUTH_NETWORK,
+      web3AuthNetwork: (web3authConfig.web3AuthNetwork || "sapphire_devnet") as typeof WEB3AUTH_NETWORK[keyof typeof WEB3AUTH_NETWORK],
       privateKeyProvider,
       chainConfig,
       uiConfig: {
@@ -163,9 +163,9 @@ export class Web3AuthProvider implements IEmbeddedWalletProvider {
     const accounts = await this.web3auth.provider?.request({ method: "eth_accounts" }) as string[];
 
     return {
-      id: userInfo.verifierId,
+      id: userInfo.verifierId || "",
       email: userInfo.email,
-      socialProvider: this.mapSocialProvider(userInfo.typeOfLogin),
+      socialProvider: this.mapSocialProvider(userInfo.typeOfLogin || ""),
       walletAddress: accounts?.[0] as Address,
       createdAt: new Date(),
     };
