@@ -150,7 +150,7 @@ export const CompilerCards = () => {
                 ))}
               </ul>
               {isActive ? (
-                <span className="text-xs opacity-50">Currently active</span>
+                <span className="text-xs opacity-50"> </span>
               ) : (
                 <button
                   className="btn btn-sm btn-ghost font-mono text-xs gap-1"
